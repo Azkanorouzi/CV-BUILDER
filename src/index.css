@@ -5,7 +5,13 @@
 .linear-wipe {
   text-align: center;
 
-  background: linear-gradient(to right, #fff 20%, #ff0 40%, #ff0 60%, #fff 80%);
+  background: linear-gradient(
+    to right,
+    cyan 20%,
+    pink 40%,
+    purple 60%,
+    cyan 80%
+  );
   background-size: 200% auto;
 
   color: #000;
@@ -14,10 +20,10 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  animation: shine 1s linear infinite;
-  @keyframes shine {
-    to {
-      background-position: 200% center;
-    }
+  animation: shine 2s linear infinite;
+}
+@keyframes shine {
+  to {
+    background-position: 200% center;
   }
 }

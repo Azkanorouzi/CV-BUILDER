@@ -1,3 +1,3 @@
-export default function Info() {
-  return <section>Info</section>
+export default function Resume() {
+  return <section>Resume</section>
 }

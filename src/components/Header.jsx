@@ -1,3 +1,7 @@
 export default function Header() {
-  return <h3>Header</h3>
+  return (
+    <header>
+      <h1 className="linear-wipe text-3xl menu-title mt-5">CV BUILDER</h1>
+    </header>
+  )
 }
