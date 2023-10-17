@@ -7,10 +7,10 @@
 
   background: linear-gradient(
     to right,
-    cyan 20%,
-    pink 40%,
+    rgb(0, 117, 117) 20%,
+    blue 40%,
     purple 60%,
-    cyan 80%
+    rgb(0, 117, 117) 80%
   );
   background-size: 200% auto;
 
