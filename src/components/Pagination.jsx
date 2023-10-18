@@ -17,7 +17,7 @@ export default function Pagination() {
         5
       </button>
       <button className="join-item btn border bg-neutral text-secondary rounded-none border-primary">
-        <i class="fa-regular fa-eye"></i>
+        <i className="fa-regular fa-eye"></i>
       </button>
     </div>
   )

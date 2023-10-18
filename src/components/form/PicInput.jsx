@@ -3,10 +3,12 @@ export default function PicInput({ img = false, imgChangeHandler }) {
     <div className="flex items-center gap-5">
       <div className="avatar">
         <div
-          className="w-24 rounded-full border-8 border-dotted animate-spin border-secondary"
+          className={`w-24 rounded-full border-secondary border border-primary ${
+            !img && 'animate-spin border-8 border-dotted'
+          }`}
           style={{ animationDuration: '8s' }}
         >
-          {img && <img src="/images/stock/" />}
+          {img && <img src={img} />}
         </div>
       </div>
       <label htmlFor="img">
@@ -16,7 +18,6 @@ export default function PicInput({ img = false, imgChangeHandler }) {
           id="img"
           name="img"
           accept="image/*"
-          value={img}
           onChange={imgChangeHandler}
         />
       </label>

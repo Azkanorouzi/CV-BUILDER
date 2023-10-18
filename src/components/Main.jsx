@@ -1,17 +1,30 @@
+import { useState } from 'react'
 import CVBuilder from '../pages/CVBuilder'
 import Info from '../pages/CVBuilder'
 import Resume from '../pages/resume'
 import Form from './form/Form'
-import PicInput from './form/PicInput'
-import TextInput from './form/TextInput'
+import GeneralInfo from './form-field-parts/general-info'
 
 export default function Main({ currentPage }) {
+  const [currentStep, setCurrentStep] = useState(1)
+  const [generalData, setGeneralData] = useState({
+    firstName: '',
+    lastName: '',
+  })
+  const [img, setImg] = useState('')
   return (
     <main className="pt-10">
       {currentPage === 'info' && (
         <CVBuilder>
           <Form>
-            <Step currentPage={currentPage} />
+            {currentStep === 1 && (
+              <GeneralInfo
+                img={img}
+                setImg={setImg}
+                generalData={generalData}
+                setGeneralData={setGeneralData}
+              />
+            )}
             {/* <PicInput></PicInput>
               <fieldset className="flex gap-10">
                 <TextInput placeholder={'John'}>First name: </TextInput>
