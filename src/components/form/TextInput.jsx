@@ -1,4 +1,10 @@
-export default function TextInput({ children, placeholder, type }) {
+export default function TextInput({
+  children,
+  placeholder,
+  type,
+  value = '',
+  onChange = function () {},
+}) {
   return (
     <label htmlFor={children}>
       {children}
@@ -6,6 +12,8 @@ export default function TextInput({ children, placeholder, type }) {
         type={type || 'text'}
         id={children}
         name={children}
+        onChange={onChange}
+        value={value}
         className="border border-secondary rounded-xl p-2 w-full text-primary"
         placeholder={
           placeholder ?? children.replaceAll(':', '').replaceAll('*', '')

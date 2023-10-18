@@ -1,5 +1,3 @@
-import PicInput from '../form/PicInput'
-import TextInput from '../form/TextInput'
 export default function GeneralInfo({
   setImg,
   img,

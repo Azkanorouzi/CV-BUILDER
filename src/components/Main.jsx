@@ -3,13 +3,15 @@ import CVBuilder from '../pages/CVBuilder'
 import Info from '../pages/CVBuilder'
 import Resume from '../pages/resume'
 import Form from './form/Form'
-import GeneralInfo from './form-field-parts/general-info'
+import GeneralInfo from './form-field-parts/General-info'
 
 export default function Main({ currentPage }) {
   const [currentStep, setCurrentStep] = useState(1)
   const [generalData, setGeneralData] = useState({
     firstName: '',
     lastName: '',
+    profession: '',
+    cityOrCountry: '',
   })
   const [img, setImg] = useState('')
   return (
@@ -25,16 +27,14 @@ export default function Main({ currentPage }) {
                 setGeneralData={setGeneralData}
               />
             )}
-            {/* <PicInput></PicInput>
-              <fieldset className="flex gap-10">
-                <TextInput placeholder={'John'}>First name: </TextInput>
-                <TextInput placeholder={'doe'}>Last name: </TextInput>
-              </fieldset>
-              <TextInput placeholder={'Front end developer'}>
-                *Profession:{' '}
-              </TextInput>
-              <TextInput placeholder={'Tehran'}>City or Country: </TextInput> */}
-
+            {currentStep === 2 && (
+              <ContactInfo
+                img={img}
+                setImg={setImg}
+                generalData={generalData}
+                setGeneralData={setGeneralData}
+              />
+            )}
             {/* <fieldset className="flex gap-10">
                 <TextInput placeholder={'e.g. Johndoe1234'}>
                   Linkedin username:{' '}
