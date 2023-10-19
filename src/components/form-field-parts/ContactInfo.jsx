@@ -1,56 +1,33 @@
-export default function GeneralInfo({
+export default function ContactInfo({
   setImg,
   img,
   generalData,
   setGeneralData,
 }) {
-  // image change handler
-  function imgChangeHandler(e) {
-    if (e.target?.files?.length) {
-      const selectedFile = e.target.files[0]
-      console.log(selectedFile.name)
-      setImg(URL.createObjectURL(selectedFile))
-    }
-  }
-  // First name hanlder
-  function dataChangeHandler(propName) {
-    return function (e) {
-      setGeneralData({ ...generalData, [propName]: e.target.value })
-    }
-  }
   return (
     <>
-      <PicInput img={img} imgChangeHandler={imgChangeHandler}></PicInput>
       <fieldset className="flex gap-10">
-        <TextInput
-          placeholder={'John'}
-          onChange={dataChangeHandler('firstName')}
-          value={generalData.firstName}
-        >
-          First name:{' '}
+        <TextInput placeholder={'e.g. Johndoe1234'}>
+          Linkedin username:{' '}
         </TextInput>
-        <TextInput
-          placeholder={'doe'}
-          onChange={dataChangeHandler('lastName')}
-          value={generalData.lastName}
-        >
-          Last name:{' '}
+        <TextInput placeholder={'e.g. https://github.com/Azkanorouzi'}>
+          Portfolio Url:{' '}
         </TextInput>
       </fieldset>
-      <TextInput
-        placeholder={'Front end developer'}
-        onChange={dataChangeHandler('profession')}
-        value={generalData.profession}
-      >
-        Profession:{' '}
+      <TextInput placeholder={'Johndoe@gmail.com'} type={'email'}>
+        Email:{' '}
       </TextInput>
-      <TextInput
-        placeholder={'Tehran'}
-        onChange={dataChangeHandler('cityOrCountry')}
-        value={generalData.cityOrCountry}
-      >
-        City or Country:{' '}
+      <TextInput placeholder={'phone number'} type={'tel'}>
+        Phone number:{' '}
       </TextInput>
+      <label htmlFor="desc">
+        Description:
+        <textArea
+          placeholder="something"
+          className="w-full resize-none h-24 border border-secondary rounded-xl p-1 text-primary"
+          id="desc"
+        ></textArea>
+      </label>
     </>
   )
 }

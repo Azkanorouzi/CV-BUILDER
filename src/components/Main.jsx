@@ -4,6 +4,7 @@ import Info from '../pages/CVBuilder'
 import Resume from '../pages/resume'
 import Form from './form/Form'
 import GeneralInfo from './form-field-parts/General-info'
+import ContactInfo from './form-field-parts/ContactInfo'
 
 export default function Main({ currentPage }) {
   const [currentStep, setCurrentStep] = useState(1)
@@ -17,7 +18,7 @@ export default function Main({ currentPage }) {
   return (
     <main className="pt-10">
       {currentPage === 'info' && (
-        <CVBuilder>
+        <CVBuilder currentStep={currentStep} setCurrentStep={setCurrentStep}>
           <Form>
             {currentStep === 1 && (
               <GeneralInfo
