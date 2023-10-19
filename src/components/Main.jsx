@@ -5,21 +5,61 @@ import Resume from '../pages/resume'
 import Form from './form/Form'
 import GeneralInfo from './form-field-parts/General-info'
 import ContactInfo from './form-field-parts/ContactInfo'
+import EducationInfo from './form-field-parts/EducationInfo'
+import { returnArrWithLength, GenerateEducation } from '../utils/helpers'
+import FormError from './form/FormError'
 
 export default function Main({ currentPage }) {
-  const [currentStep, setCurrentStep] = useState(1)
+  const [currentStep, setCurrentStep] = useState(3)
+  const [err, setErr] = useState(false)
+
   const [generalData, setGeneralData] = useState({
     firstName: '',
     lastName: '',
     profession: '',
     cityOrCountry: '',
   })
+  const [contactData, setContactData] = useState({
+    linkedinUserName: '',
+    portfolioUrl: '',
+    email: '',
+    phoneNumber: '',
+    description: '',
+  })
+  const [educationData, setEducationData] = useState({
+    0: {
+      institutionName: '',
+      degreeTitle: '',
+      startingDate: '',
+      endingDate: '',
+    },
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    length: 1,
+  })
   const [img, setImg] = useState('')
+
+  function addNewItemHandler(setter, data, generator, max) {
+    return function () {
+      if (data.length === max) {
+        setErr(`Error: Too many items (maximum number of items is ${max} )`)
+        return
+      }
+      setter({
+        ...data,
+        [Array.from(data).length + 1]: generator(),
+        length: data.length + 1,
+      })
+    }
+  }
   return (
     <main className="pt-10">
+      {err && <FormError setErr={setErr}>{err}</FormError>}
       {currentPage === 'info' && (
         <CVBuilder currentStep={currentStep} setCurrentStep={setCurrentStep}>
-          <Form>
+          <Form setCurrentStep={setCurrentStep}>
             {currentStep === 1 && (
               <GeneralInfo
                 img={img}
@@ -30,34 +70,30 @@ export default function Main({ currentPage }) {
             )}
             {currentStep === 2 && (
               <ContactInfo
-                img={img}
-                setImg={setImg}
-                generalData={generalData}
-                setGeneralData={setGeneralData}
+                contactData={contactData}
+                setContactData={setContactData}
               />
             )}
-            {/* <fieldset className="flex gap-10">
-                <TextInput placeholder={'e.g. Johndoe1234'}>
-                  Linkedin username:{' '}
-                </TextInput>
-                <TextInput placeholder={'e.g. https://github.com/Azkanorouzi'}>
-                  Portfolio Url:{' '}
-                </TextInput>
-              </fieldset>
-              <TextInput placeholder={'Johndoe@gmail.com'} type={'email'}>
-                Email:{' '}
-              </TextInput>
-              <TextInput placeholder={'phone number'} type={'tel'}>
-                Phone number:{' '}
-              </TextInput>
-              <label htmlFor="desc">
-                Description:
-                <textArea
-                  placeholder="something"
-                  className="w-full resize-none h-24 border border-secondary rounded-xl p-1 text-primary"
-                  id="desc"
-                ></textArea>
-              </label> */}
+
+            {currentStep === 3 && (
+              <>
+                {returnArrWithLength(educationData.length + 1).map((_, i) =>
+                  educationData[i] ? <EducationInfo key={i} index={i} /> : ''
+                )}{' '}
+                <button
+                  className="btn btn-primary text-black"
+                  type="button"
+                  onClick={addNewItemHandler(
+                    setEducationData,
+                    educationData,
+                    GenerateEducation,
+                    5
+                  )}
+                >
+                  Add new degree
+                </button>
+              </>
+            )}
 
             {/* <div className="bg-neutral p-3 flex flex-col gap-2 justify-center items-center rounded-2xl text-center">
                 <fieldset className="flex gap-10">

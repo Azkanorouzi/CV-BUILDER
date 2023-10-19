@@ -27,3 +27,14 @@
     background-position: 200% center;
   }
 }
+.animate-opacity {
+  animation: animate-opacity 3s linear forwards;
+}
+@keyframes animate-opacity {
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
