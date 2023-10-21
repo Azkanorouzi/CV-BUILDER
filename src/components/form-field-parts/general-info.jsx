@@ -12,7 +12,6 @@ export default function GeneralInfo({
   function imgChangeHandler(e) {
     if (e.target?.files?.length) {
       const selectedFile = e.target.files[0]
-      console.log(selectedFile.name)
       setImg(URL.createObjectURL(selectedFile))
     }
   }

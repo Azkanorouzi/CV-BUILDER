@@ -6,7 +6,6 @@ export default function ThemeChangeBtn({ classes }) {
   const toggleTheme = () => {
     // Toggle the theme (e.g., between 'night' and 'day')
     theme.current = theme.current === 'night' ? 'light' : 'night'
-    console.log(theme.current)
     // You can also store the theme preference in local storage or a state management system.
     document.documentElement.setAttribute('data-theme', theme.current)
   }

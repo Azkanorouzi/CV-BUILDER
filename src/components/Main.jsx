@@ -26,34 +26,26 @@ export default function Main({ currentPage }) {
     phoneNumber: '',
     description: '',
   })
-  const [educationData, setEducationData] = useState({
-    0: {
+  const [educationData, setEducationData] = useState([
+    {
       institutionName: '',
       degreeTitle: '',
       startingDate: '',
       endingDate: '',
+      id: crypto.randomUUID(),
     },
-    1: false,
-    2: false,
-    3: false,
-    4: false,
-    length: 1,
-  })
+  ])
   const [img, setImg] = useState('')
 
-  function addNewItemHandler(setter, data, generator, max) {
-    return function () {
-      if (data.length === max) {
-        setErr(`Error: Too many items (maximum number of items is ${max} )`)
-        return
-      }
-      setter({
-        ...data,
-        [Array.from(data).length + 1]: generator(),
-        length: data.length + 1,
-      })
+  function addNewItemHandler() {
+    if (educationData.length === 5) {
+      setErr("Error: you can't have more than 5 items")
+      return
     }
+    const newItem = GenerateEducation()
+    setEducationData([...educationData, newItem])
   }
+
   return (
     <main className="pt-10">
       {err && <FormError setErr={setErr}>{err}</FormError>}
@@ -78,17 +70,21 @@ export default function Main({ currentPage }) {
             {currentStep === 3 && (
               <>
                 {returnArrWithLength(educationData.length + 1).map((_, i) =>
-                  educationData[i] ? <EducationInfo key={i} index={i} /> : ''
+                  educationData[i] ? (
+                    <EducationInfo
+                      key={educationData[i]?.id}
+                      index={i}
+                      educationData={educationData}
+                      setEducationData={setEducationData}
+                    />
+                  ) : (
+                    ''
+                  )
                 )}{' '}
                 <button
                   className="btn btn-primary text-black"
                   type="button"
-                  onClick={addNewItemHandler(
-                    setEducationData,
-                    educationData,
-                    GenerateEducation,
-                    5
-                  )}
+                  onClick={() => addNewItemHandler()}
                 >
                   Add new degree
                 </button>

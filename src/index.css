@@ -31,7 +31,7 @@
   animation: animate-opacity 3s linear forwards;
 }
 @keyframes animate-opacity {
-  50% {
+  70% {
     opacity: 1;
   }
   100% {

@@ -16,7 +16,6 @@ export function dataChangeHandler(propName, setter, data) {
  * @returns {array} an array with the given length
  */
 export function returnArrWithLength(length) {
-  console.log(length)
   if (length < 0) return []
   return Array.from({ length }).fill('.')
 }
@@ -27,5 +26,6 @@ export function GenerateEducation() {
     degreeTitle: '',
     startingDate: '',
     endingDate: '',
+    id: crypto.randomUUID(),
   }
 }
