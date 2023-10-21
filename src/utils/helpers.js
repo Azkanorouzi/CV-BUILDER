@@ -29,3 +29,29 @@ export function GenerateEducation() {
     id: crypto.randomUUID(),
   }
 }
+
+export function GenerateJob() {
+  return {
+    position: '',
+    company: '',
+    location: '',
+    startingDate: '',
+    endingDate: '',
+    description: '',
+    id: crypto.randomUUID(),
+  }
+}
+
+export function itemInputChangeHandler(propName, data, setter, index) {
+  return function (e) {
+    const newObj = { ...data[index], [propName]: e.target.value }
+    const newData = [...data]
+    newData[index] = newObj
+    setter(newData)
+  }
+}
+export function deleteItemClickHandler(data, setter, index) {
+  const newData = [...data]
+  newData.splice(index, 1)
+  setter(newData)
+}

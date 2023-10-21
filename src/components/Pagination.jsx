@@ -42,6 +42,14 @@ export default function Pagination({ currentStep = 1, setCurrentStep }) {
         5
       </button>
       <button
+        onClick={() => setCurrentStep(5)}
+        className={`join-item btn bg-neutral text-secondary rounded-bl-none border-primary ${
+          currentStep === 5 && 'bg-primary translate-y-8'
+        }`}
+      >
+        6
+      </button>
+      <button
         onClick={() => setCurrentStep(6)}
         className={`join-item btn bg-neutral text-secondary rounded-none border-primary ${
           currentStep === 6 && 'bg-primary translate-y-8'

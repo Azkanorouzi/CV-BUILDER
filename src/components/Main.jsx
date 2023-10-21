@@ -6,7 +6,12 @@ import Form from './form/Form'
 import GeneralInfo from './form-field-parts/General-info'
 import ContactInfo from './form-field-parts/ContactInfo'
 import EducationInfo from './form-field-parts/EducationInfo'
-import { returnArrWithLength, GenerateEducation } from '../utils/helpers'
+import JobExperience from './form-field-parts/JobExperience'
+import {
+  returnArrWithLength,
+  GenerateEducation,
+  GenerateJob,
+} from '../utils/helpers'
 import FormError from './form/FormError'
 
 export default function Main({ currentPage }) {
@@ -35,15 +40,26 @@ export default function Main({ currentPage }) {
       id: crypto.randomUUID(),
     },
   ])
+  const [jobExperienceData, setJobExperienceData] = useState([
+    {
+      position: '',
+      company: '',
+      location: '',
+      startingDate: '',
+      endingDate: '',
+      description: '',
+      id: crypto.randomUUID(),
+    },
+  ])
   const [img, setImg] = useState('')
 
-  function addNewItemHandler() {
-    if (educationData.length === 5) {
-      setErr("Error: you can't have more than 5 items")
+  function addNewItemHandler(data, setter, generator, max) {
+    if (data.length === max) {
+      setErr(`Error: you can't have more than ${max} items`)
       return
     }
-    const newItem = GenerateEducation()
-    setEducationData([...educationData, newItem])
+    const newItem = generator()
+    setter([...data, newItem])
   }
 
   return (
@@ -51,7 +67,7 @@ export default function Main({ currentPage }) {
       {err && <FormError setErr={setErr}>{err}</FormError>}
       {currentPage === 'info' && (
         <CVBuilder currentStep={currentStep} setCurrentStep={setCurrentStep}>
-          <Form setCurrentStep={setCurrentStep}>
+          <Form setCurrentStep={setCurrentStep} currentStep={currentStep}>
             {currentStep === 1 && (
               <GeneralInfo
                 img={img}
@@ -84,74 +100,50 @@ export default function Main({ currentPage }) {
                 <button
                   className="btn btn-primary text-black"
                   type="button"
-                  onClick={() => addNewItemHandler()}
+                  onClick={() =>
+                    addNewItemHandler(
+                      educationData,
+                      setEducationData,
+                      GenerateEducation,
+                      3
+                    )
+                  }
                 >
                   Add new degree
                 </button>
               </>
             )}
 
-            {/* <div className="bg-neutral p-3 flex flex-col gap-2 justify-center items-center rounded-2xl text-center">
-                <fieldset className="flex gap-10">
-                  <TextInput placeholder={'The odin project'}>
-                    Institution name:{' '}
-                  </TextInput>
-                  <TextInput placeholder={'Full stack developer certification'}>
-                    Degree, Certification or title:{' '}
-                  </TextInput>
-                </fieldset>
-                <fieldset className="flex gap-10">
-                  <TextInput placeholder={'The odin project'} type="date">
-                    Starting date:{' '}
-                  </TextInput>
-                  <TextInput
-                    placeholder={'Full stack developer certification'}
-                    type="date"
-                  >
-                    Ending date:{' '}
-                  </TextInput>
-                </fieldset>
-              </div>
-              <div className="divider"></div>
-              <button className="btn btn-primary text-black">
-                Add new degree
-              </button> */}
-
-            {/* <div className="bg-neutral p-3 flex flex-col gap-2 justify-center items-center rounded-2xl text-center">
-                <fieldset className="flex gap-10">
-                  <TextInput placeholder={'Front end developer'}>
-                    Your Position:{' '}
-                  </TextInput>
-                  <TextInput placeholder={'Google'}>Company: </TextInput>
-                </fieldset>
-                <fieldset className="flex gap-10">
-                  <TextInput placeholder={'The odin project'} type="date">
-                    Starting date:{' '}
-                  </TextInput>
-                  <TextInput
-                    placeholder={'Full stack developer certification'}
-                    type="date"
-                  >
-                    Ending date:{' '}
-                  </TextInput>
-                </fieldset>
-                <fieldset>
-                  <TextInput placeholder={'USA'}>Location: </TextInput>
-                </fieldset>
-                <label htmlFor="desc">
-                  Description:
-                  <textArea
-                    placeholder="something"
-                    className="w-full resize-none h-24 border border-secondary rounded-xl p-1 text-primary"
-                    id="desc"
-                  ></textArea>
-                </label>
-              </div>
-
-              <div className="divider"></div>
-              <button className="btn btn-primary text-black">
-                Add new work experience
-              </button> */}
+            {currentStep === 4 && (
+              <>
+                {returnArrWithLength(jobExperienceData.length + 1).map((_, i) =>
+                  jobExperienceData[i] ? (
+                    <JobExperience
+                      key={jobExperienceData[i]?.id}
+                      index={i}
+                      jobExperienceData={jobExperienceData}
+                      setEducationData={setJobExperienceData}
+                    />
+                  ) : (
+                    ''
+                  )
+                )}{' '}
+                <button
+                  className="btn btn-primary text-black"
+                  type="button"
+                  onClick={() =>
+                    addNewItemHandler(
+                      jobExperienceData,
+                      setJobExperienceData,
+                      GenerateJob,
+                      3
+                    )
+                  }
+                >
+                  Add new Job experience
+                </button>
+              </>
+            )}
 
             {/* <div className="bg-neutral p-3 flex flex-col gap-2 justify-center items-center rounded-2xl text-center">
                 <fieldset className="flex gap-10">
