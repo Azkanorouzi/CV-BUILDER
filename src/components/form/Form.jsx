@@ -1,6 +1,21 @@
+import { useEffect } from 'react'
+
 export default function Form({ children, setCurrentStep, currentStep }) {
+  useEffect(() => {
+    document.addEventListener('keydown', (e) => {
+      if (
+        e.key < 1 ||
+        e.key > 7 ||
+        isNaN(+e.key) ||
+        JSON.stringify(document.activeElement).includes('input')
+      ) {
+        if (e.key !== 'Enter') return
+      }
+      currentStep !== e.key && setCurrentStep(e.key == 'Enter' ? 8 : +e.key)
+    })
+  }, [])
   function handleNextClick() {
-    setCurrentStep((step) => (step + 1 < 7 ? step + 1 : step))
+    setCurrentStep((step) => (step + 1 < 8 ? step + 1 : step))
   }
   function handleBackClick() {
     setCurrentStep((step) => step - 1)
@@ -18,7 +33,7 @@ export default function Form({ children, setCurrentStep, currentStep }) {
             Back
           </button>
         )}
-        {currentStep !== 5 && (
+        {currentStep !== 8 && (
           <button
             className="btn btn-secondary flex-1"
             type="button"

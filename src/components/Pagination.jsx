@@ -42,17 +42,25 @@ export default function Pagination({ currentStep = 1, setCurrentStep }) {
         5
       </button>
       <button
-        onClick={() => setCurrentStep(5)}
+        onClick={() => setCurrentStep(6)}
         className={`join-item btn bg-neutral text-secondary rounded-bl-none border-primary ${
-          currentStep === 5 && 'bg-primary translate-y-8'
+          currentStep === 6 && 'bg-primary translate-y-8'
         }`}
       >
         6
       </button>
       <button
-        onClick={() => setCurrentStep(6)}
+        onClick={() => setCurrentStep(7)}
+        className={`join-item btn bg-neutral text-secondary rounded-bl-none border-primary ${
+          currentStep === 7 && 'bg-primary translate-y-8'
+        }`}
+      >
+        7
+      </button>
+      <button
+        onClick={() => setCurrentStep(8)}
         className={`join-item btn bg-neutral text-secondary rounded-none border-primary ${
-          currentStep === 6 && 'bg-primary translate-y-8'
+          currentStep === 8 && 'bg-primary translate-y-8'
         }`}
       >
         <i className="fa-regular fa-eye"></i>

@@ -16,12 +16,11 @@ import Footer from './components/footer'
 */
 function App() {
   const [currentPage, setCurPage] = useState('info')
-  const [currentTab, setCurTab] = useState('1')
 
   return (
     <div className="flex flex-col min-h-screen relative">
-      <Header />
-      <Main currentPage={currentPage} />
+      <Header setCurPage={setCurPage} />
+      <Main currentPage={currentPage} setCurPage={setCurPage} />
       <Footer />
     </div>
   )

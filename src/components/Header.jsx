@@ -1,5 +1,5 @@
 import ThemeChangeBtn from './ThemeChangeBtn'
-export default function Header() {
+export default function Header({ setCurPage }) {
   return (
     <header className="flex justify-between px-10 py-5 sticky">
       <ThemeChangeBtn />
@@ -8,7 +8,12 @@ export default function Header() {
         <span>CV BUILDER</span>
       </h1>
       <label className="swap swap-flip" role="button">
-        <input type="checkbox" />
+        <input
+          type="checkbox"
+          onClick={() =>
+            setCurPage((cur) => (cur === 'resume' ? 'info' : 'resume'))
+          }
+        />
         <div className="swap-off flex items-center gap-2">
           <i className="fa-solid fa-pen text-3xl hover"></i>
           <span className="text-xl">Build</span>

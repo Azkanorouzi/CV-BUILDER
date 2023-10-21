@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CVBuilder from '../pages/CVBuilder'
 import Info from '../pages/CVBuilder'
 import Resume from '../pages/resume'
@@ -13,8 +13,11 @@ import {
   GenerateJob,
 } from '../utils/helpers'
 import FormError from './form/FormError'
+import Skill from './form-field-parts/Skills'
+import Languages from './form-field-parts/languages'
+import Interests from './form-field-parts/interests'
 
-export default function Main({ currentPage }) {
+export default function Main({ currentPage, onChangePage }) {
   const [currentStep, setCurrentStep] = useState(3)
   const [err, setErr] = useState(false)
 
@@ -52,6 +55,9 @@ export default function Main({ currentPage }) {
     },
   ])
   const [img, setImg] = useState('')
+  const [skills, setSkills] = useState(['', ''])
+  const [languages, setLanguages] = useState(['', ''])
+  const [interest, setInterest] = useState(['', ''])
 
   function addNewItemHandler(data, setter, generator, max) {
     if (data.length === max) {
@@ -122,7 +128,7 @@ export default function Main({ currentPage }) {
                       key={jobExperienceData[i]?.id}
                       index={i}
                       jobExperienceData={jobExperienceData}
-                      setEducationData={setJobExperienceData}
+                      setJobExperienceData={setJobExperienceData}
                     />
                   ) : (
                     ''
@@ -145,6 +151,25 @@ export default function Main({ currentPage }) {
               </>
             )}
 
+            {currentStep === 5 && (
+              <Skill skills={skills} setSkills={setSkills} setErr={setErr} />
+            )}
+
+            {currentStep === 6 && (
+              <Languages
+                languages={languages}
+                setLanguages={setLanguages}
+                setErr={setErr}
+              />
+            )}
+
+            {currentStep === 7 && (
+              <Interests
+                interest={interest}
+                setInterest={setInterest}
+                setErr={setErr}
+              />
+            )}
             {/* <div className="bg-neutral p-3 flex flex-col gap-2 justify-center items-center rounded-2xl text-center">
                 <fieldset className="flex gap-10">
                   <TextInput placeholder={'Js'}>Skill: </TextInput>
