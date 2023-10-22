@@ -1,4 +1,8 @@
-export default function Pagination({ currentStep = 1, setCurrentStep }) {
+export default function Pagination({
+  currentStep = 1,
+  setCurrentStep,
+  setCurPage,
+}) {
   return (
     <div className="join mb-0 flex">
       <button
@@ -58,10 +62,8 @@ export default function Pagination({ currentStep = 1, setCurrentStep }) {
         7
       </button>
       <button
-        onClick={() => setCurrentStep(8)}
-        className={`join-item btn bg-neutral text-secondary rounded-none border-primary ${
-          currentStep === 8 && 'bg-primary translate-y-8'
-        }`}
+        onClick={() => setCurPage('resume')}
+        className={`join-item btn bg-neutral text-secondary rounded-none border-primary`}
       >
         <i className="fa-regular fa-eye"></i>
       </button>

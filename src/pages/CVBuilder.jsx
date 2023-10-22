@@ -1,12 +1,18 @@
 import Pagination from '../components/Pagination'
 
-export default function CVBuilder({ children, currentStep, setCurrentStep }) {
+export default function CVBuilder({
+  children,
+  currentStep,
+  setCurrentStep,
+  setCurPage,
+}) {
   return (
-    <section className="grid place-content-center w-full h-full ">
+    <section className="grid place-content-center w-full h-full animate-opacity-in opacity-0">
       <div className="flex items-center rounded-xl">
         <Pagination
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
+          setCurPage={setCurPage}
         ></Pagination>
         <div className="text-3xl bg-neutral w-full h-full rounded-tr-2xl border  border-l-0 text-primary flex items-center justify-center border-primary">
           <span className="text-secondary px-2">

@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import CVBuilder from '../pages/CVBuilder'
-import Info from '../pages/CVBuilder'
 import Resume from '../pages/resume'
 import Form from './form/Form'
 import GeneralInfo from './form-field-parts/General-info'
@@ -17,8 +16,8 @@ import Skill from './form-field-parts/Skills'
 import Languages from './form-field-parts/languages'
 import Interests from './form-field-parts/interests'
 
-export default function Main({ currentPage, onChangePage }) {
-  const [currentStep, setCurrentStep] = useState(3)
+export default function Main({ currentPage, setCurPage }) {
+  const [currentStep, setCurrentStep] = useState(1)
   const [err, setErr] = useState(false)
 
   const [generalData, setGeneralData] = useState({
@@ -69,11 +68,19 @@ export default function Main({ currentPage, onChangePage }) {
   }
 
   return (
-    <main className="pt-10">
+    <main className="pt-10 pb-20">
       {err && <FormError setErr={setErr}>{err}</FormError>}
       {currentPage === 'info' && (
-        <CVBuilder currentStep={currentStep} setCurrentStep={setCurrentStep}>
-          <Form setCurrentStep={setCurrentStep} currentStep={currentStep}>
+        <CVBuilder
+          currentStep={currentStep}
+          setCurrentStep={setCurrentStep}
+          setCurPage={setCurPage}
+        >
+          <Form
+            setCurrentStep={setCurrentStep}
+            currentStep={currentStep}
+            setCurPage={setCurPage}
+          >
             {currentStep === 1 && (
               <GeneralInfo
                 img={img}
@@ -170,49 +177,23 @@ export default function Main({ currentPage, onChangePage }) {
                 setErr={setErr}
               />
             )}
-            {/* <div className="bg-neutral p-3 flex flex-col gap-2 justify-center items-center rounded-2xl text-center">
-                <fieldset className="flex gap-10">
-                  <TextInput placeholder={'Js'}>Skill: </TextInput>
-                </fieldset>
-              </div>
-
-              <div className="bg-neutral p-3 flex flex-col gap-2 justify-center items-center rounded-2xl text-center">
-                <fieldset className="flex gap-10">
-                  <TextInput placeholder={'Good communication skill'}>
-                    Skill:{' '}
-                  </TextInput>
-                </fieldset>
-              </div>
-              <div className="divider"></div>
-              <button className="btn btn-primary text-black">
-                Add new Skill
-              </button> */}
-
-            {/* <div className="bg-neutral p-3 flex flex-col gap-2 justify-center items-center rounded-2xl text-center relative">
-              <div>
-                <i className="fa-solid fa-times text-danger absolute top-3 right-5 cursor-pointer"></i>
-              </div>
-              <fieldset className="flex gap-10">
-                <TextInput placeholder={'Interest'}>Interest: </TextInput>
-              </fieldset>
-            </div>
-
-            <div className="bg-neutral p-3 flex flex-col gap-2 justify-center items-center rounded-2xl text-center relative">
-              <div>
-                <i className="fa-solid fa-times text-danger absolute top-3 right-5 cursor-pointer"></i>
-              </div>
-              <fieldset className="flex gap-10">
-                <TextInput placeholder={'Bodybuilding'}>Interest: </TextInput>
-              </fieldset>
-            </div>
-            <div className="divider"></div>
-            <button className="btn btn-primary text-black">
-              Add new Skill
-            </button> */}
           </Form>
         </CVBuilder>
       )}
-      {currentPage === 'resume' && <Resume />}
+      {currentPage === 'resume' && (
+        <Resume
+          data={{
+            generalData,
+            contactData,
+            educationData,
+            jobExperienceData,
+            img,
+            skills,
+            languages,
+            interest,
+          }}
+        />
+      )}
     </main>
   )
 }

@@ -6,13 +6,13 @@ export default function FormError({ children, setErr }) {
     const timer = setTimeout(function () {
       setIsVisible(false)
       setErr(false)
-    }, 3000)
+    }, 2500)
     return () => {
       clearTimeout(timer)
     }
   }, [])
   return isVisible ? (
-    <div className="fixed top-20 z-10 w-full flex justify-center items-center animate-opacity">
+    <div className="fixed top-20 z-10 w-full flex justify-center items-center animate-opacity ">
       <div className="alert alert-error w-3/6">
         <svg
           xmlns="http://www.w3.org/2000/svg"

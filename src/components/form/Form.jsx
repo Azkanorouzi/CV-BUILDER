@@ -1,6 +1,11 @@
 import { useEffect } from 'react'
 
-export default function Form({ children, setCurrentStep, currentStep }) {
+export default function Form({
+  children,
+  setCurrentStep,
+  currentStep,
+  setCurPage,
+}) {
   useEffect(() => {
     document.addEventListener('keydown', (e) => {
       if (
@@ -14,7 +19,11 @@ export default function Form({ children, setCurrentStep, currentStep }) {
       currentStep !== e.key && setCurrentStep(e.key == 'Enter' ? 8 : +e.key)
     })
   }, [])
+  function handleFinalStep() {
+    setCurPage((cur) => (currentStep === 7 ? 'resume' : cur))
+  }
   function handleNextClick() {
+    handleFinalStep()
     setCurrentStep((step) => (step + 1 < 8 ? step + 1 : step))
   }
   function handleBackClick() {

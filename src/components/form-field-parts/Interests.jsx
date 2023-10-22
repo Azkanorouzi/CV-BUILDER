@@ -32,7 +32,7 @@ export default function Interests({ interest, setInterest, setErr }) {
           )}
           <fieldset className="flex gap-10">
             <TextInput
-              placeholder={'English'}
+              placeholder={'video games'}
               value={interest}
               onChange={(e) => inputChangeHandler(e, i)}
             >

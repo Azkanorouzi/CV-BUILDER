@@ -28,13 +28,26 @@
   }
 }
 .animate-opacity {
-  animation: animate-opacity 3s linear forwards;
+  animation: animate-opacity 4s linear forwards;
+}
+.animate-opacity-in {
+  animation: animate-opacity-in 0.5s linear forwards;
 }
 @keyframes animate-opacity {
   70% {
-    opacity: 1;
+    opacity: 0;
   }
   100% {
+    opacity: 1;
+  }
+}
+@keyframes animate-opacity-in {
+  20% {
     opacity: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
