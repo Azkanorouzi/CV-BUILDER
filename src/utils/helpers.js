@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 /**
  * THIS higher order will return a function that will be used to handle input values
  * @param {string} propName
@@ -54,4 +56,34 @@ export function deleteItemClickHandler(data, setter, index) {
   const newData = [...data]
   newData.splice(index, 1)
   setter(newData)
+}
+
+export function useLocalStorage(key, defaultValue) {
+  const [localStorageValue, setLocalStorageValue] = useState(() => {
+    try {
+      const value = localStorage.getItem(key)
+      /* if the value is already in local storage it will return it otherwise set the default value and then return it */
+      if (value) {
+        return JSON.parse(value)
+      } else {
+        localStorage.setItem(key, JSON.stringify(defaultValue))
+        return defaultValue
+      }
+    } catch (e) {
+      localStorage.setItem(key, JSON.stringify(defaultValue))
+      return defaultValue
+    }
+  })
+  const setLocalStorageStateValue = (valueOrFn) => {
+    let newValue
+    if (typeof valueOrFn === 'function') {
+      const fn = valueOrFn
+      newValue = fn(localStorageValue)
+    } else {
+      newValue = valueOrFn
+    }
+    localStorage.setItem(key, JSON.stringify(newValue))
+    setLocalStorageValue(newValue)
+  }
+  return [localStorageValue, setLocalStorageStateValue]
 }

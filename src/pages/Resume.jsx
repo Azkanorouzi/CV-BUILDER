@@ -1,8 +1,8 @@
-import { useEffect } from 'react'
-
+import ResumeCard from '../components/ResumeCard'
 export default function Resume({ data }) {
-  useEffect(() => {
-    console.log(data)
-  }, [])
-  return <section>resume</section>
+  return (
+    <section className="grid place-content-center">
+      <ResumeCard data={data}></ResumeCard>
+    </section>
+  )
 }

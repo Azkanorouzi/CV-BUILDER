@@ -6,9 +6,6 @@ export default function EducationInfo({
   setEducationData,
   index,
 }) {
-  useEffect(function () {
-    console.log(index)
-  }, [])
   function inputChangeHandler(propName) {
     return function (e) {
       const newObj = { ...educationData[index], [propName]: e.target.value }
