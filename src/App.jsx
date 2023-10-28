@@ -15,7 +15,7 @@ import Footer from './components/footer'
       </button>
 */
 function App() {
-  const [currentPage, setCurPage] = useState('info')
+  const [currentPage, setCurPage] = useState('resume')
 
   return (
     <div className="flex flex-col min-h-screen relative">

@@ -1,6 +1,7 @@
 import PicInput from '../form/PicInput'
 import TextInput from '../form/TextInput'
 import { dataChangeHandler } from '../../utils/helpers'
+import { useEffect } from 'react'
 
 export default function GeneralInfo({
   setImg,
@@ -8,10 +9,14 @@ export default function GeneralInfo({
   generalData,
   setGeneralData,
 }) {
+  useEffect(() => {
+    console.log(document.querySelector('.input-file')?.files)
+  }, [])
   // image change handler
-  function imgChangeHandler(e) {
-    if (e.target?.files?.length) {
-      const selectedFile = e.target.files[0]
+  function imgChangeHandler(e, target) {
+    if (target ?? e.target?.files?.length) {
+      const selectedFile = target?.files[0] ?? e.target.files[0]
+      localStorage.removeItem('img')
       setImg(URL.createObjectURL(selectedFile))
     }
   }

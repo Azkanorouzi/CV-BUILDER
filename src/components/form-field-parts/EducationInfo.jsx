@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import TextInput from '../form/TextInput'
 
 export default function EducationInfo({

@@ -18,7 +18,8 @@ export default function PicInput({ img = false, imgChangeHandler }) {
           id="img"
           name="img"
           accept="image/*"
-          onChange={imgChangeHandler}
+          onChange={(e) => imgChangeHandler(e)}
+          className="input-file"
         />
       </label>
     </div>

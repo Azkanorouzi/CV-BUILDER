@@ -10,7 +10,6 @@ import {
   returnArrWithLength,
   GenerateEducation,
   GenerateJob,
-  useLocalStorage,
 } from '../utils/helpers'
 import FormError from './form/FormError'
 import Skill from './form-field-parts/Skills'
@@ -18,69 +17,60 @@ import Languages from './form-field-parts/languages'
 import Interests from './form-field-parts/interests'
 
 export default function Main({ currentPage, setCurPage }) {
-  const [currentStep, setCurrentStep] = useState(1)
+  const storedData = JSON.parse(localStorage.getItem('data'))
+  const [currentStep, setCurrentStep] = useState(storedData?.currentStep ?? 1)
+
   const [err, setErr] = useState(false)
-  const [generalData, setGeneralData] = useState({
-    firstName: '',
-    lastName: '',
-    profession: '',
-    cityOrCountry: '',
-  })
-  const [contactData, setContactData] = useState({
-    linkedinUserName: '',
-    portfolioUrl: '',
-    email: '',
-    phoneNumber: '',
-    description: '',
-  })
-  const [educationData, setEducationData] = useState([
-    {
-      institutionName: '',
-      degreeTitle: '',
-      startingDate: '',
-      endingDate: '',
-      id: crypto.randomUUID(),
-    },
-  ])
-  const [jobExperienceData, setJobExperienceData] = useState([
-    {
-      position: '',
-      company: '',
-      location: '',
-      startingDate: '',
-      endingDate: '',
-      description: '',
-      id: crypto.randomUUID(),
-    },
-  ])
-  const [img, setImg] = useState('')
-  const [skills, setSkills] = useState(['', ''])
-  const [languages, setLanguages] = useState(['', ''])
-  const [interest, setInterest] = useState(['', ''])
-  const [localStorageValue, setLocalStorageStateValue] = useLocalStorage(
-    'data',
-    {
-      generalData,
-      contactData,
-      educationData,
-      jobExperienceData,
-      img,
-      skills,
-      languages,
-      interest,
+  const [generalData, setGeneralData] = useState(
+    storedData?.generalData ?? {
+      firstName: '',
+      lastName: '',
+      profession: '',
+      cityOrCountry: '',
     }
   )
+  const [contactData, setContactData] = useState(
+    storedData?.contactData ?? {
+      linkedinUserName: '',
+      portfolioUrl: '',
+      email: '',
+      phoneNumber: '',
+      description: '',
+    }
+  )
+  const [educationData, setEducationData] = useState(
+    storedData?.educationData ?? [
+      {
+        institutionName: '',
+        degreeTitle: '',
+        startingDate: '',
+        endingDate: '',
+        id: crypto.randomUUID(),
+      },
+    ]
+  )
+  const [jobExperienceData, setJobExperienceData] = useState(
+    storedData?.jobExperienceData ?? [
+      {
+        position: '',
+        company: '',
+        location: '',
+        startingDate: '',
+        endingDate: '',
+        description: '',
+        id: crypto.randomUUID(),
+      },
+    ]
+  )
+  const [img, setImg] = useState(storedData?.img ?? '')
+  const [skills, setSkills] = useState(storedData?.skills ?? ['', ''])
+  const [languages, setLanguages] = useState(storedData?.languages ?? ['', ''])
+  const [interest, setInterest] = useState(storedData?.interest ?? ['', ''])
+
   useEffect(() => {
-    console.log(localStorageValue)
-    setGeneralData(localStorageValue.generalData)
-    setContactData(localStorageValue.contactData)
-    setImg(localStorageValue.img)
-    setSkills(localStorageValue.skills)
-    setEducationData(localStorageValue.educationData)
-    setJobExperienceData(localStorageValue.jobExperienceData)
-    setLanguages(localStorageValue.languages)
-    return () => {
-      setLocalStorageStateValue({
+    localStorage.setItem(
+      'data',
+      JSON.stringify({
         generalData,
         contactData,
         educationData,
@@ -89,20 +79,9 @@ export default function Main({ currentPage, setCurPage }) {
         skills,
         languages,
         interest,
+        currentStep,
       })
-    }
-  }, [])
-  useEffect(() => {
-    setLocalStorageStateValue({
-      generalData,
-      contactData,
-      educationData,
-      jobExperienceData,
-      img,
-      skills,
-      languages,
-      interest,
-    })
+    )
   }, [
     generalData,
     contactData,
@@ -112,8 +91,9 @@ export default function Main({ currentPage, setCurPage }) {
     skills,
     languages,
     interest,
-    setLocalStorageStateValue,
+    currentStep,
   ])
+
   function addNewItemHandler(data, setter, generator, max) {
     if (data.length === max) {
       setErr(`Error: you can't have more than ${max} items`)
@@ -131,7 +111,6 @@ export default function Main({ currentPage, setCurPage }) {
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
           setCurPage={setCurPage}
-          setLocalStorageStateValue={setLocalStorageStateValue}
           data={{
             generalData,
             contactData,

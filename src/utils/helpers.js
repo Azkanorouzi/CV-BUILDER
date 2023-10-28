@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 /**
  * THIS higher order will return a function that will be used to handle input values
@@ -86,4 +86,9 @@ export function useLocalStorage(key, defaultValue) {
     setLocalStorageValue(newValue)
   }
   return [localStorageValue, setLocalStorageStateValue]
+}
+export function shouldTextBeDark(color) {
+  const decimalColor = parseInt(color.slice(1), 16)
+  if (decimalColor >= 8947848) return true
+  return false
 }

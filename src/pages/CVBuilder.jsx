@@ -6,17 +6,7 @@ export default function CVBuilder({
   currentStep,
   setCurrentStep,
   setCurPage,
-  data,
-  setLocalStorageStateValue,
 }) {
-  // useEffect(() => {
-  //   return () => {
-  //     setLocalStorageStateValue(data)
-  //   }
-  // }, [])
-  // useEffect(() => {
-  //   setLocalStorageStateValue(data)
-  // }, [data])
   return (
     <section className="grid place-content-center w-full h-full animate-opacity-in opacity-0">
       <div className="flex items-center rounded-xl">
