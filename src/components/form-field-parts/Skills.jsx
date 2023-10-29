@@ -1,4 +1,5 @@
-import TextInput from '../form/TextInput'
+import TextInput from './TextInput'
+import AddBtn from './AddBtn'
 
 export default function Skill({ skills, dispatch }) {
   function inputChangeHandler(e, index) {
@@ -44,15 +45,7 @@ export default function Skill({ skills, dispatch }) {
           </fieldset>
         </div>
       ))}
-
-      <div className="divider"></div>
-      <button
-        className="btn btn-primary text-black"
-        type="button"
-        onClick={(e) => addHandler(e, 12)}
-      >
-        Add new Skill
-      </button>
+      <AddBtn onClick={(e) => addHandler(e, 4)}>Skills</AddBtn>
     </>
   )
 }

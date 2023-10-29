@@ -1,5 +1,5 @@
-import PicInput from '../form/PicInput'
-import TextInput from '../form/TextInput'
+import PicInput from './PicInput'
+import TextInput from './TextInput'
 import { dataChangeHandler } from '../../utils/helpers'
 
 export default function GeneralInfo({ img, generalData, dispatch }) {

@@ -1,4 +1,4 @@
-import TextInput from '../form/TextInput'
+import TextInput from './TextInput'
 
 export default function EducationInfo({ educationData, dispatch, index }) {
   function inputChangeHandler(propName) {

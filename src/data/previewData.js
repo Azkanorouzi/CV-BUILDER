@@ -1,6 +1,6 @@
 export default {
   state: {
-    currentStep: 8,
+    currentStep: 1,
     err: false,
   },
   data: {

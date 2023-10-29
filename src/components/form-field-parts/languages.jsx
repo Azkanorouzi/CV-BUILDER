@@ -1,4 +1,5 @@
-import TextInput from '../form/TextInput'
+import TextInput from './TextInput'
+import AddBtn from './AddBtn'
 
 export default function Languages({ languages, dispatch }) {
   function inputChangeHandler(e, index) {
@@ -44,15 +45,7 @@ export default function Languages({ languages, dispatch }) {
           </fieldset>
         </div>
       ))}
-
-      <div className="divider"></div>
-      <button
-        className="btn btn-primary text-black"
-        type="button"
-        onClick={(e) => addHandler(e, 4)}
-      >
-        Add new Language
-      </button>
+      <AddBtn onClick={(e) => addHandler(e, 4)}>Languages</AddBtn>
     </>
   )
 }

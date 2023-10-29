@@ -29,7 +29,7 @@ function reducer({ state, data }, { type, payLoad }) {
     case 'setStepFinal':
       return {
         data: { ...data },
-        state: { ...state, step: 7 },
+        state: { ...state, step: 1 },
       }
     case 'newItem':
       return {

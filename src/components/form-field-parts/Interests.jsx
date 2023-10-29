@@ -1,4 +1,5 @@
-import TextInput from '../form/TextInput'
+import Interest from './Interest'
+import AddBtn from './AddBtn'
 
 export default function Interests({ interest, dispatch }) {
   function inputChangeHandler(e, index) {
@@ -24,35 +25,16 @@ export default function Interests({ interest, dispatch }) {
   return (
     <>
       {interest.map((interest, i) => (
-        <div
-          className="bg-neutral p-3 flex flex-col gap-2 justify-center items-center rounded-2xl text-center relative"
+        <Interest
+          deleteClickHandler={deleteClickHandler}
+          interest={interest}
+          inputChangeHandler={inputChangeHandler}
           key={i}
-        >
-          {i > 0 && (
-            <div onClick={() => deleteClickHandler(i)}>
-              <i className="fa-solid fa-times text-danger absolute top-3 right-5 cursor-pointer"></i>
-            </div>
-          )}
-          <fieldset className="flex gap-10">
-            <TextInput
-              placeholder={'video games'}
-              value={interest}
-              onChange={(e) => inputChangeHandler(e, i)}
-            >
-              Interest:{' '}
-            </TextInput>
-          </fieldset>
-        </div>
+          i={i}
+        />
       ))}
 
-      <div className="divider"></div>
-      <button
-        className="btn btn-primary text-black"
-        type="button"
-        onClick={(e) => addHandler(e, 4)}
-      >
-        Add new Interest
-      </button>
+      <AddBtn onClick={(e) => addHandler(e, 4)}>Skills</AddBtn>
     </>
   )
 }

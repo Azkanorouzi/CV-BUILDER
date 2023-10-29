@@ -1,4 +1,4 @@
-import TextInput from '../form/TextInput'
+import TextInput from './TextInput'
 import { dataChangeHandler } from '../../utils/helpers'
 
 export default function ContactInfo({ contactData, dispatch }) {

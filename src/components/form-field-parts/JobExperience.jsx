@@ -1,4 +1,4 @@
-import TextInput from '../form/TextInput'
+import TextInput from './TextInput'
 
 export default function JobExperience({ jobExperienceData, dispatch, index }) {
   function inputChangeHandler(propName) {
@@ -88,7 +88,6 @@ export default function JobExperience({ jobExperienceData, dispatch, index }) {
           ></textArea>
         </label>
       </div>
-      <div className="divider"></div>
     </>
   )
 }

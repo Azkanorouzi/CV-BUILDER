@@ -2,22 +2,35 @@ import { useEffect } from 'react'
 
 export default function Form({ children, dispatch, currentStep, setCurPage }) {
   useEffect(() => {
-    document.addEventListener('keydown', (e) => {
+    function handleKeyDown(e) {
       if (
         e.key < 1 ||
         e.key > 7 ||
         isNaN(+e.key) ||
-        JSON.stringify(document.activeElement).includes('input')
+        document.activeElement.tagName === 'INPUT' ||
+        document.activeElement.tagName === 'TEXTAREA'
       ) {
-        if (e.key !== 'Enter') return
+        console.log(currentStep)
+        if (e.key === 'Enter' && currentStep < 7) {
+          dispatch({ type: 'setStep', payLoad: currentStep + 1 })
+          return
+        }
+        if (e.key === 'Enter' && currentStep === 7) {
+          setCurPage('resume')
+          dispatch({ type: 'setStepFinal' })
+          return
+        }
+        return
       }
-      currentStep !== e.key &&
-        dispatch({ type: 'setStep', payLoad: e.key == 'Enter' ? 8 : +e.key })
-    })
-  }, [currentStep, dispatch])
+      currentStep !== e.key && dispatch({ type: 'setStep', payLoad: +e.key })
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return function () {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [currentStep, dispatch, setCurPage])
 
   function handleNextClick() {
-    console.log(currentStep)
     if (currentStep === 7) {
       dispatch({ type: 'setStepFinal' })
       setCurPage('resume')
