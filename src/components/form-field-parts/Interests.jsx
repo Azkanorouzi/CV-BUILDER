@@ -1,22 +1,25 @@
 import TextInput from '../form/TextInput'
 
-export default function Interests({ interest, setInterest, setErr }) {
+export default function Interests({ interest, dispatch }) {
   function inputChangeHandler(e, index) {
     const newInterest = [...interest]
     newInterest[index] = e.target.value
-    setInterest(newInterest)
+    dispatch({ type: 'setInterests', payLoad: newInterest })
   }
   function deleteClickHandler(index) {
     const newInterest = [...interest]
     newInterest.splice(index, 1)
-    setInterest(newInterest)
+    dispatch({ type: 'setInterests', payLoad: newInterest })
   }
   function addHandler(e, max) {
     if (interest.length > max) {
-      setErr(`Error: you can't have more than ${max} items`)
+      dispatch({
+        type: 'err',
+        payLoad: `Error: you can't have more than ${max} items`,
+      })
       return
     }
-    setInterest([...interest, e.target.value])
+    dispatch({ type: 'setInterests', payLoad: [...interest, e.target.value] })
   }
   return (
     <>

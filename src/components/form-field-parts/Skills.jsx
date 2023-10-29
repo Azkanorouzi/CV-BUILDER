@@ -1,22 +1,25 @@
 import TextInput from '../form/TextInput'
 
-export default function Skill({ skills, setSkills, setErr }) {
+export default function Skill({ skills, dispatch }) {
   function inputChangeHandler(e, index) {
     const newSkills = [...skills]
     newSkills[index] = e.target.value
-    setSkills(newSkills)
+    dispatch({ type: 'setSkills', payLoad: newSkills })
   }
   function deleteClickHandler(index) {
     const newSkills = [...skills]
     newSkills.splice(index, 1)
-    setSkills(newSkills)
+    dispatch({ type: 'setSkills', payLoad: newSkills })
   }
   function addHandler(e, max) {
     if (skills.length > max) {
-      setErr(`Error: you can't have more than ${max} items`)
+      dispatch({
+        type: 'err',
+        payLoad: `Error: you can't have more than ${max} items`,
+      })
       return
     }
-    setSkills([...skills, e.target.value])
+    dispatch({ type: 'setSkills', payLoad: [...skills, e.target.value] })
   }
   return (
     <>

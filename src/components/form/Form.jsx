@@ -1,11 +1,6 @@
 import { useEffect } from 'react'
 
-export default function Form({
-  children,
-  setCurrentStep,
-  currentStep,
-  setCurPage,
-}) {
+export default function Form({ children, dispatch, currentStep, setCurPage }) {
   useEffect(() => {
     document.addEventListener('keydown', (e) => {
       if (
@@ -16,18 +11,19 @@ export default function Form({
       ) {
         if (e.key !== 'Enter') return
       }
-      currentStep !== e.key && setCurrentStep(e.key == 'Enter' ? 8 : +e.key)
+      currentStep !== e.key &&
+        dispatch({ type: 'setStep', payLoad: e.key == 'Enter' ? 8 : +e.key })
     })
-  }, [])
-  function handleFinalStep() {
-    setCurPage((cur) => (currentStep === 7 ? 'resume' : cur))
-  }
+  }, [currentStep, dispatch])
+
   function handleNextClick() {
-    handleFinalStep()
-    setCurrentStep((step) => (step + 1 < 8 ? step + 1 : step))
-  }
-  function handleBackClick() {
-    setCurrentStep((step) => step - 1)
+    console.log(currentStep)
+    if (currentStep === 7) {
+      dispatch({ type: 'setStepFinal' })
+      setCurPage('resume')
+      return
+    }
+    dispatch({ type: 'setStep', payLoad: currentStep + 1 })
   }
   return (
     <form className="relative flex flex-col gap-5">
@@ -37,7 +33,9 @@ export default function Form({
           <button
             className="btn btn-accent flex-1"
             type="button"
-            onClick={handleBackClick}
+            onClick={() =>
+              dispatch({ type: 'setStep', payLoad: currentStep - 1 })
+            }
           >
             Back
           </button>

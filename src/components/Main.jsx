@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import CVBuilder from '../pages/CVBuilder'
 import Resume from '../pages/resume'
 import Form from './form/Form'
@@ -15,154 +14,125 @@ import FormError from './form/FormError'
 import Skill from './form-field-parts/Skills'
 import Languages from './form-field-parts/languages'
 import Interests from './form-field-parts/interests'
+import { useReducer } from 'react'
+import initialData from '../data/initialData'
+import previewData from '../data/previewData'
 
+function reducer({ state, data }, { type, payLoad }) {
+  switch (type) {
+    case 'err':
+      return { data: { ...data }, state: { ...state, err: payLoad } }
+    case 'removeErr':
+      return { data: { ...data }, state: { ...state, err: false } }
+    case 'setStep':
+      return { data: { ...data }, state: { ...state, currentStep: payLoad } }
+    case 'setStepFinal':
+      return {
+        data: { ...data },
+        state: { ...state, step: 7 },
+      }
+    case 'newItem':
+      return {
+        state: { ...state },
+        data: {
+          ...data,
+          [payLoad.propName]: [...data[payLoad.propName], payLoad.newItem],
+        },
+      }
+    case 'setItems':
+      return {
+        state: { ...state },
+        data: {
+          ...data,
+          [payLoad.propName]: [...payLoad.newItems],
+        },
+      }
+    case 'deleteItem':
+      return {
+        state: { ...state },
+        data: {
+          ...data,
+          [payLoad.propName]: payLoad.newItems,
+        },
+      }
+    case 'setImg':
+      return { state: { ...state }, data: { ...data, img: payLoad } }
+    case 'setGeneralData':
+      return { state: { ...state }, data: { ...data, generalData: payLoad } }
+    case 'setContactData':
+      return { state: { ...state }, data: { ...data, contactData: payLoad } }
+    case 'setSkills':
+      return { state: { ...state }, data: { ...data, skills: payLoad } }
+    case 'setLanguages':
+      return { state: { ...state }, data: { ...data, languages: payLoad } }
+    case 'setInterests':
+      return { state: { ...state }, data: { ...data, interests: payLoad } }
+    case 'setPreview':
+      return previewData
+  }
+}
 export default function Main({ currentPage, setCurPage }) {
-  const storedData = JSON.parse(localStorage.getItem('data'))
-  const [currentStep, setCurrentStep] = useState(storedData?.currentStep ?? 1)
-
-  const [err, setErr] = useState(false)
-  const [generalData, setGeneralData] = useState(
-    storedData?.generalData ?? {
-      firstName: '',
-      lastName: '',
-      profession: '',
-      cityOrCountry: '',
-    }
-  )
-  const [contactData, setContactData] = useState(
-    storedData?.contactData ?? {
-      linkedinUserName: '',
-      portfolioUrl: '',
-      email: '',
-      phoneNumber: '',
-      description: '',
-    }
-  )
-  const [educationData, setEducationData] = useState(
-    storedData?.educationData ?? [
-      {
-        institutionName: '',
-        degreeTitle: '',
-        startingDate: '',
-        endingDate: '',
-        id: crypto.randomUUID(),
-      },
-    ]
-  )
-  const [jobExperienceData, setJobExperienceData] = useState(
-    storedData?.jobExperienceData ?? [
-      {
-        position: '',
-        company: '',
-        location: '',
-        startingDate: '',
-        endingDate: '',
-        description: '',
-        id: crypto.randomUUID(),
-      },
-    ]
-  )
-  const [img, setImg] = useState(storedData?.img ?? '')
-  const [skills, setSkills] = useState(storedData?.skills ?? ['', ''])
-  const [languages, setLanguages] = useState(storedData?.languages ?? ['', ''])
-  const [interest, setInterest] = useState(storedData?.interest ?? ['', ''])
-
-  useEffect(() => {
-    localStorage.setItem(
-      'data',
-      JSON.stringify({
-        generalData,
-        contactData,
-        educationData,
-        jobExperienceData,
-        img,
-        skills,
-        languages,
-        interest,
-        currentStep,
-      })
-    )
-  }, [
-    generalData,
-    contactData,
-    educationData,
-    jobExperienceData,
-    img,
-    skills,
-    languages,
-    interest,
-    currentStep,
-  ])
-
+  const [{ state, data }, dispatch] = useReducer(reducer, initialData)
   function addNewItemHandler(data, setter, generator, max) {
     if (data.length === max) {
-      setErr(`Error: you can't have more than ${max} items`)
+      dispatch({
+        type: 'err',
+        payLoad: `Error: you can't have more than ${max} items`,
+      })
       return
     }
     const newItem = generator()
-    setter([...data, newItem])
+    dispatch({ type: 'newItem', payLoad: { propName: setter, newItem } })
   }
 
   return (
-    <main className="pt-10 pb-20">
-      {err && <FormError setErr={setErr}>{err}</FormError>}
+    <main className="pb-20 pt-40">
+      {state.err && <FormError dispatch={dispatch}>{state.err}</FormError>}
       {currentPage === 'info' && (
         <CVBuilder
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
+          currentStep={state.currentStep}
+          dispatch={dispatch}
+          data={data}
           setCurPage={setCurPage}
-          data={{
-            generalData,
-            contactData,
-            educationData,
-            jobExperienceData,
-            img,
-            skills,
-            languages,
-            interest,
-          }}
         >
           <Form
-            setCurrentStep={setCurrentStep}
-            currentStep={currentStep}
+            dispatch={dispatch}
+            currentStep={state.currentStep}
             setCurPage={setCurPage}
           >
-            {currentStep === 1 && (
+            {state.currentStep === 1 && (
               <GeneralInfo
-                img={img}
-                setImg={setImg}
-                generalData={generalData}
-                setGeneralData={setGeneralData}
+                img={data.img}
+                generalData={data.generalData}
+                dispatch={dispatch}
               />
             )}
-            {currentStep === 2 && (
-              <ContactInfo
-                contactData={contactData}
-                setContactData={setContactData}
-              />
+            {state.currentStep === 2 && (
+              <ContactInfo contactData={data.contactData} dispatch={dispatch} />
             )}
 
-            {currentStep === 3 && (
+            {state.currentStep === 3 && (
               <>
-                {returnArrWithLength(educationData.length + 1).map((_, i) =>
-                  educationData[i] ? (
-                    <EducationInfo
-                      key={educationData[i]?.id}
-                      index={i}
-                      educationData={educationData}
-                      setEducationData={setEducationData}
-                    />
-                  ) : (
-                    ''
-                  )
+                {returnArrWithLength(data.educationData.length + 1).map(
+                  (_, i) =>
+                    data.educationData[i] ? (
+                      <EducationInfo
+                        key={data.educationData[i]?.id}
+                        index={i}
+                        educationData={data.educationData}
+                        dispatch={dispatch}
+                      />
+                    ) : (
+                      ''
+                    )
                 )}{' '}
                 <button
                   className="btn btn-primary text-black"
                   type="button"
                   onClick={() =>
                     addNewItemHandler(
-                      educationData,
-                      setEducationData,
+                      data.educationData,
+                      'educationData',
                       GenerateEducation,
                       3
                     )
@@ -173,27 +143,28 @@ export default function Main({ currentPage, setCurPage }) {
               </>
             )}
 
-            {currentStep === 4 && (
+            {state.currentStep === 4 && (
               <>
-                {returnArrWithLength(jobExperienceData.length + 1).map((_, i) =>
-                  jobExperienceData[i] ? (
-                    <JobExperience
-                      key={jobExperienceData[i]?.id}
-                      index={i}
-                      jobExperienceData={jobExperienceData}
-                      setJobExperienceData={setJobExperienceData}
-                    />
-                  ) : (
-                    ''
-                  )
+                {returnArrWithLength(data.jobExperienceData.length + 1).map(
+                  (_, i) =>
+                    data.jobExperienceData[i] ? (
+                      <JobExperience
+                        key={data.jobExperienceData[i]?.id}
+                        index={i}
+                        jobExperienceData={data.jobExperienceData}
+                        dispatch={dispatch}
+                      />
+                    ) : (
+                      ''
+                    )
                 )}{' '}
                 <button
                   className="btn btn-primary text-black"
                   type="button"
                   onClick={() =>
                     addNewItemHandler(
-                      jobExperienceData,
-                      setJobExperienceData,
+                      data.jobExperienceData,
+                      'jobExperienceData',
                       GenerateJob,
                       3
                     )
@@ -204,42 +175,21 @@ export default function Main({ currentPage, setCurPage }) {
               </>
             )}
 
-            {currentStep === 5 && (
-              <Skill skills={skills} setSkills={setSkills} setErr={setErr} />
+            {state.currentStep === 5 && (
+              <Skill skills={data.skills} dispatch={dispatch} />
             )}
 
-            {currentStep === 6 && (
-              <Languages
-                languages={languages}
-                setLanguages={setLanguages}
-                setErr={setErr}
-              />
+            {state.currentStep === 6 && (
+              <Languages languages={data.languages} dispatch={dispatch} />
             )}
 
-            {currentStep === 7 && (
-              <Interests
-                interest={interest}
-                setInterest={setInterest}
-                setErr={setErr}
-              />
+            {state.currentStep === 7 && (
+              <Interests interest={data.interests} dispatch={dispatch} />
             )}
           </Form>
         </CVBuilder>
       )}
-      {currentPage === 'resume' && (
-        <Resume
-          data={{
-            generalData,
-            contactData,
-            educationData,
-            jobExperienceData,
-            img,
-            skills,
-            languages,
-            interest,
-          }}
-        />
-      )}
+      {currentPage === 'resume' && <Resume data={data} dispatch2={dispatch} />}
     </main>
   )
 }

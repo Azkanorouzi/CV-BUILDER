@@ -1,22 +1,27 @@
 import TextInput from '../form/TextInput'
 
-export default function EducationInfo({
-  educationData,
-  setEducationData,
-  index,
-}) {
+export default function EducationInfo({ educationData, dispatch, index }) {
   function inputChangeHandler(propName) {
     return function (e) {
       const newObj = { ...educationData[index], [propName]: e.target.value }
       const newEducationData = [...educationData]
       newEducationData[index] = newObj
-      setEducationData(newEducationData)
+      dispatch({
+        type: 'setItems',
+        payLoad: {
+          propName: 'educationData',
+          newItems: newEducationData,
+        },
+      })
     }
   }
   function deleteClickHandler() {
     const newEducationData = [...educationData]
     newEducationData.splice(index, 1)
-    setEducationData(newEducationData)
+    dispatch({
+      type: 'deleteItem',
+      payLoad: { propName: 'educationData', newItems: newEducationData },
+    })
   }
   return (
     <div className="bg-neutral p-3 flex flex-col gap-2 justify-center items-center rounded-2xl text-center relative">

@@ -1,9 +1,11 @@
-import ResumeCard from '../components/ResumeCard'
-import InputColor from '../components/InputColor'
 import { useReducer } from 'react'
-import DownloadBtn from '../components/DownloadBtn'
-import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
+
+import ResumeCard from '../components/Resume/ResumeCard'
+import InputColor from '../components/Resume/InputColor'
+import DownloadBtn from '../components/Resume/DownloadBtn'
+import GeneratePreviewBtn from '../components/Resume/GeneratePreviewBtn'
 
 const initialColors = {
   accentColor: '#ff0000',
@@ -22,11 +24,10 @@ function reducer(state, action) {
       throw new Error(`Invalid action ${action.type}`)
   }
 }
-export default function Resume({ data }) {
+export default function Resume({ data, dispatch2 }) {
   const [colors, dispatch] = useReducer(reducer, initialColors)
   function downloadPDF() {
     const resumeCardElement = document.querySelector('.resume-card')
-    console.log(resumeCardElement)
 
     // Create a canvas from the HTML content
     html2canvas(resumeCardElement, { scrollY: -window.scrollY }).then(
@@ -74,6 +75,7 @@ export default function Resume({ data }) {
         bgColor={colors.bgColor}
         secBgColor={colors.secBgColor}
       ></ResumeCard>
+      <GeneratePreviewBtn dispatch={dispatch2} />
     </section>
   )
 }

@@ -1,7 +1,7 @@
 import TextInput from '../form/TextInput'
 import { dataChangeHandler } from '../../utils/helpers'
 
-export default function ContactInfo({ contactData, setContactData }) {
+export default function ContactInfo({ contactData, dispatch }) {
   return (
     <>
       <fieldset className="flex gap-10">
@@ -9,8 +9,9 @@ export default function ContactInfo({ contactData, setContactData }) {
           placeholder={'e.g. Johndoe1234'}
           onChange={dataChangeHandler(
             'linkedinUserName',
-            setContactData,
-            contactData
+            dispatch,
+            contactData,
+            'setContactData'
           )}
           value={contactData.linkedinUserName}
         >
@@ -20,8 +21,9 @@ export default function ContactInfo({ contactData, setContactData }) {
           placeholder={'e.g. https://github.com/Azkanorouzi'}
           onChange={dataChangeHandler(
             'portfolioUrl',
-            setContactData,
-            contactData
+            dispatch,
+            contactData,
+            'setContactData'
           )}
           value={contactData.portfolioUrl}
         >
@@ -31,7 +33,12 @@ export default function ContactInfo({ contactData, setContactData }) {
       <TextInput
         placeholder={'Johndoe@gmail.com'}
         type={'email'}
-        onChange={dataChangeHandler('email', setContactData, contactData)}
+        onChange={dataChangeHandler(
+          'email',
+          dispatch,
+          contactData,
+          'setContactData'
+        )}
         value={contactData.email}
       >
         Email:{' '}
@@ -39,7 +46,12 @@ export default function ContactInfo({ contactData, setContactData }) {
       <TextInput
         placeholder={'phone number'}
         type={'tel'}
-        onChange={dataChangeHandler('phoneNumber', setContactData, contactData)}
+        onChange={dataChangeHandler(
+          'phoneNumber',
+          dispatch,
+          contactData,
+          'setContactData'
+        )}
         value={contactData.phoneNumber}
       >
         Phone number:{' '}
@@ -52,8 +64,9 @@ export default function ContactInfo({ contactData, setContactData }) {
           id="desc"
           onChange={dataChangeHandler(
             'description',
-            setContactData,
-            contactData
+            dispatch,
+            contactData,
+            'setContactData'
           )}
           value={contactData.description}
         ></textarea>

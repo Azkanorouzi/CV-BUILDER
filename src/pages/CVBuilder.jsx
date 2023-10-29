@@ -1,10 +1,9 @@
-import { useEffect } from 'react'
-import Pagination from '../components/Pagination'
+import Pagination from '../components/form/Pagination'
 
 export default function CVBuilder({
   children,
   currentStep,
-  setCurrentStep,
+  dispatch,
   setCurPage,
 }) {
   return (
@@ -12,7 +11,7 @@ export default function CVBuilder({
       <div className="flex items-center rounded-xl">
         <Pagination
           currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
+          dispatch={dispatch}
           setCurPage={setCurPage}
         ></Pagination>
         <div className="text-3xl bg-neutral w-full h-full rounded-tr-2xl border  border-l-0 text-primary flex items-center justify-center border-primary">

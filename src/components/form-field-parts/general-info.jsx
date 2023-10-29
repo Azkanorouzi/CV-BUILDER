@@ -1,23 +1,13 @@
 import PicInput from '../form/PicInput'
 import TextInput from '../form/TextInput'
 import { dataChangeHandler } from '../../utils/helpers'
-import { useEffect } from 'react'
 
-export default function GeneralInfo({
-  setImg,
-  img,
-  generalData,
-  setGeneralData,
-}) {
-  useEffect(() => {
-    console.log(document.querySelector('.input-file')?.files)
-  }, [])
-  // image change handler
+export default function GeneralInfo({ img, generalData, dispatch }) {
   function imgChangeHandler(e, target) {
     if (target ?? e.target?.files?.length) {
       const selectedFile = target?.files[0] ?? e.target.files[0]
       localStorage.removeItem('img')
-      setImg(URL.createObjectURL(selectedFile))
+      dispatch({ type: 'setImg', payLoad: URL.createObjectURL(selectedFile) })
     }
   }
 
@@ -27,14 +17,14 @@ export default function GeneralInfo({
       <fieldset className="flex gap-10">
         <TextInput
           placeholder={'John'}
-          onChange={dataChangeHandler('firstName', setGeneralData, generalData)}
+          onChange={dataChangeHandler('firstName', dispatch, generalData)}
           value={generalData.firstName}
         >
           First name:{' '}
         </TextInput>
         <TextInput
           placeholder={'doe'}
-          onChange={dataChangeHandler('lastName', setGeneralData, generalData)}
+          onChange={dataChangeHandler('lastName', dispatch, generalData)}
           value={generalData.lastName}
         >
           Last name:{' '}
@@ -42,18 +32,14 @@ export default function GeneralInfo({
       </fieldset>
       <TextInput
         placeholder={'Front end developer'}
-        onChange={dataChangeHandler('profession', setGeneralData, generalData)}
+        onChange={dataChangeHandler('profession', dispatch, generalData)}
         value={generalData.profession}
       >
         Profession:{' '}
       </TextInput>
       <TextInput
         placeholder={'Tehran'}
-        onChange={dataChangeHandler(
-          'cityOrCountry',
-          setGeneralData,
-          generalData
-        )}
+        onChange={dataChangeHandler('cityOrCountry', dispatch, generalData)}
         value={generalData.cityOrCountry}
       >
         City or Country:{' '}

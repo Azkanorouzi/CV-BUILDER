@@ -1,22 +1,25 @@
 import TextInput from '../form/TextInput'
 
-export default function Languages({ languages, setLanguages, setErr }) {
+export default function Languages({ languages, dispatch }) {
   function inputChangeHandler(e, index) {
     const newLanguages = [...languages]
     newLanguages[index] = e.target.value
-    setLanguages(newLanguages)
+    dispatch({ type: 'setLanguages', payLoad: newLanguages })
   }
   function deleteClickHandler(index) {
     const newLanguages = [...languages]
     newLanguages.splice(index, 1)
-    setLanguages(newLanguages)
+    dispatch({ type: 'setLanguages', payLoad: newLanguages })
   }
   function addHandler(e, max) {
     if (languages.length > max) {
-      setErr(`Error: you can't have more than ${max} items`)
+      dispatch({
+        type: 'err',
+        payLoad: `Error: you can't have more than ${max} items`,
+      })
       return
     }
-    setLanguages([...languages, e.target.value])
+    dispatch({ type: 'setLanguages', payLoad: [...languages, e.target.value] })
   }
   return (
     <>

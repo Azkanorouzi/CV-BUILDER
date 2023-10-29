@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Main from './components/main'
-import Header from './components/header'
-import Footer from './components/footer'
+import Header from './components/header/Header'
+import Footer from './components/footer/Footer'
 
 /* 
     <button data-set-theme="night" data-act-class="ACTIVECLASS">

@@ -7,9 +7,17 @@ import { useState } from 'react'
  * @param {object} data
  * @returns a handler function
  */
-export function dataChangeHandler(propName, setter, data) {
+export function dataChangeHandler(
+  propName,
+  dispatch,
+  data,
+  type = 'setGeneralData'
+) {
   return function (e) {
-    setter({ ...data, [propName]: e.target.value })
+    dispatch({
+      type,
+      payLoad: { ...data, [propName]: e.target.value },
+    })
   }
 }
 /**

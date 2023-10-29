@@ -1,9 +1,8 @@
-import { shouldTextBeDark } from '../utils/helpers'
+import { shouldTextBeDark } from '../../utils/helpers'
 
 export default function ResumeCard({ data, accentColor, bgColor, secBgColor }) {
   const isTextDark = shouldTextBeDark(bgColor)
   const isTextDark2 = shouldTextBeDark(secBgColor)
-
   return (
     <section
       className="flex max-w-4xl resume-card "
@@ -55,7 +54,7 @@ export default function ResumeCard({ data, accentColor, bgColor, secBgColor }) {
           <h2 className="text-2xl">Interests</h2>
           <div className="divider mt-2"></div>
           <ul className="text-lg grid gap-3">
-            {data?.interest.map((interest, i) =>
+            {data?.interests.map((interest, i) =>
               interest ? (
                 <li key={i} className="whitespace-nowrap text-sm">
                   {interest}

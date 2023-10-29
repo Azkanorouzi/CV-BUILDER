@@ -1,18 +1,23 @@
-import { useRef, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export default function FormError({ children, setErr }) {
+export default function FormError({ children, dispatch }) {
   const [isVisible, setIsVisible] = useState(true)
-  useEffect(function () {
-    const timer = setTimeout(function () {
-      setIsVisible(false)
-      setErr(false)
-    }, 2500)
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [])
+
+  useEffect(
+    function () {
+      const timer = setTimeout(function () {
+        setIsVisible(false)
+        dispatch({ type: 'removeErr' })
+      }, 2500)
+      return () => {
+        clearTimeout(timer)
+      }
+    },
+    [dispatch]
+  )
+
   return isVisible ? (
-    <div className="fixed top-20 z-10 w-full flex justify-center items-center animate-opacity ">
+    <div className="fixed top-20 z-50 w-full flex justify-center items-center animate-opacity ">
       <div className="alert alert-error w-3/6">
         <svg
           xmlns="http://www.w3.org/2000/svg"

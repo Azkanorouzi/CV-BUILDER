@@ -1,22 +1,30 @@
 import TextInput from '../form/TextInput'
 
-export default function JobExperience({
-  jobExperienceData,
-  setJobExperienceData,
-  index,
-}) {
+export default function JobExperience({ jobExperienceData, dispatch, index }) {
   function inputChangeHandler(propName) {
     return function (e) {
       const newObj = { ...jobExperienceData[index], [propName]: e.target.value }
-      const newEducationData = [...jobExperienceData]
-      newEducationData[index] = newObj
-      setJobExperienceData(newEducationData)
+      const newJobExperienceData = [...jobExperienceData]
+      newJobExperienceData[index] = newObj
+      dispatch({
+        type: 'setItems',
+        payLoad: {
+          propName: 'jobExperienceData',
+          newItems: newJobExperienceData,
+        },
+      })
     }
   }
   function deleteClickHandler() {
     const newEducationData = [...jobExperienceData]
     newEducationData.splice(index, 1)
-    setJobExperienceData(newEducationData)
+    dispatch({
+      type: 'deleteItem',
+      payLoad: {
+        propName: 'jobExperienceData',
+        newItem: newEducationData,
+      },
+    })
   }
   return (
     <>
