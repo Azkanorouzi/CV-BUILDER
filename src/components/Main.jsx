@@ -13,7 +13,7 @@ import {
 import FormError from './form/FormError'
 import Skill from './form-field-parts/Skills'
 import Languages from './form-field-parts/languages'
-import Interests from './form-field-parts/interests'
+import Interests from './form-field-parts/Interests'
 import { useReducer } from 'react'
 import initialData from '../data/initialData'
 import previewData from '../data/previewData'
@@ -121,25 +121,19 @@ export default function Main({ currentPage, setCurPage }) {
                         index={i}
                         educationData={data.educationData}
                         dispatch={dispatch}
+                        handler={() =>
+                          addNewItemHandler(
+                            data.educationData,
+                            'educationData',
+                            GenerateEducation,
+                            3
+                          )
+                        }
                       />
                     ) : (
                       ''
                     )
                 )}{' '}
-                <button
-                  className="btn btn-primary text-black"
-                  type="button"
-                  onClick={() =>
-                    addNewItemHandler(
-                      data.educationData,
-                      'educationData',
-                      GenerateEducation,
-                      3
-                    )
-                  }
-                >
-                  Add new degree
-                </button>
               </>
             )}
 
@@ -153,25 +147,19 @@ export default function Main({ currentPage, setCurPage }) {
                         index={i}
                         jobExperienceData={data.jobExperienceData}
                         dispatch={dispatch}
+                        handler={() =>
+                          addNewItemHandler(
+                            data.jobExperienceData,
+                            'jobExperienceData',
+                            GenerateJob,
+                            3
+                          )
+                        }
                       />
                     ) : (
                       ''
                     )
                 )}{' '}
-                <button
-                  className="btn btn-primary text-black"
-                  type="button"
-                  onClick={() =>
-                    addNewItemHandler(
-                      data.jobExperienceData,
-                      'jobExperienceData',
-                      GenerateJob,
-                      3
-                    )
-                  }
-                >
-                  Add new Job experience
-                </button>
               </>
             )}
 

@@ -1,6 +1,13 @@
 import TextInput from './TextInput'
+import AddBtn from './AddBtn'
+import DescriptionInput from './DescriptionInput'
 
-export default function JobExperience({ jobExperienceData, dispatch, index }) {
+export default function JobExperience({
+  jobExperienceData,
+  dispatch,
+  index,
+  handler,
+}) {
   function inputChangeHandler(propName) {
     return function (e) {
       const newObj = { ...jobExperienceData[index], [propName]: e.target.value }
@@ -77,17 +84,15 @@ export default function JobExperience({ jobExperienceData, dispatch, index }) {
             Location:{' '}
           </TextInput>
         </fieldset>
-        <label htmlFor="desc">
-          Description:
-          <textArea
-            placeholder="something"
-            className="w-full resize-none h-24 border border-secondary rounded-xl p-1 text-primary"
-            id="desc"
-            value={jobExperienceData[index].description}
-            onChange={inputChangeHandler('description')}
-          ></textArea>
-        </label>
+        <DescriptionInput
+          inputChangeHandler={inputChangeHandler}
+          index={index}
+          data={jobExperienceData}
+        />
       </div>
+      {index === jobExperienceData.length - 1 && (
+        <AddBtn onClick={handler}>Job experience</AddBtn>
+      )}
     </>
   )
 }

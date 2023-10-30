@@ -1,5 +1,6 @@
 import TextInput from './TextInput'
 import AddBtn from './AddBtn'
+import TimesClose from './TimesClose'
 
 export default function Skill({ skills, dispatch }) {
   function inputChangeHandler(e, index) {
@@ -29,11 +30,7 @@ export default function Skill({ skills, dispatch }) {
           className="bg-neutral p-3 flex flex-col gap-2 justify-center items-center rounded-2xl text-center relative"
           key={i}
         >
-          {i > 0 && (
-            <div onClick={() => deleteClickHandler(i)}>
-              <i className="fa-solid fa-times text-danger absolute top-3 right-5 cursor-pointer"></i>
-            </div>
-          )}
+          {i > 0 && <TimesClose handler={() => deleteClickHandler(i)} />}
           <fieldset className="flex gap-10">
             <TextInput
               placeholder={'Good communication skill'}

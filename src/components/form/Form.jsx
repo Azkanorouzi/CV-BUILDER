@@ -10,7 +10,6 @@ export default function Form({ children, dispatch, currentStep, setCurPage }) {
         document.activeElement.tagName === 'INPUT' ||
         document.activeElement.tagName === 'TEXTAREA'
       ) {
-        console.log(currentStep)
         if (e.key === 'Enter' && currentStep < 7) {
           dispatch({ type: 'setStep', payLoad: currentStep + 1 })
           return

@@ -34,7 +34,7 @@ export default function Interests({ interest, dispatch }) {
         />
       ))}
 
-      <AddBtn onClick={(e) => addHandler(e, 4)}>Skills</AddBtn>
+      <AddBtn onClick={(e) => addHandler(e, 4)}>Interest</AddBtn>
     </>
   )
 }
