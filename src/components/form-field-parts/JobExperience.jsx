@@ -1,13 +1,12 @@
 import TextInput from './TextInput'
 import AddBtn from './AddBtn'
 import DescriptionInput from './DescriptionInput'
+import { useFormData } from '../../contexts/FormDataContext'
 
-export default function JobExperience({
-  jobExperienceData,
-  dispatch,
-  index,
-  handler,
-}) {
+export default function JobExperience({ index, handler }) {
+  const { data, dispatch } = useFormData()
+  const { jobExperienceData } = data
+
   function inputChangeHandler(propName) {
     return function (e) {
       const newObj = { ...jobExperienceData[index], [propName]: e.target.value }

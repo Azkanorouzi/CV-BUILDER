@@ -1,13 +1,12 @@
 import TextInput from './TextInput'
 import AddBtn from './AddBtn'
 import TimesClose from './TimesClose'
+import { useFormData } from '../../contexts/FormDataContext'
 
-export default function EducationInfo({
-  educationData,
-  dispatch,
-  index,
-  handler,
-}) {
+export default function EducationInfo({ index, handler }) {
+  const { data, dispatch } = useFormData()
+  const { educationData } = data
+
   function inputChangeHandler(propName) {
     return function (e) {
       const newObj = { ...educationData[index], [propName]: e.target.value }

@@ -1,7 +1,11 @@
 import TextInput from './TextInput'
 import { dataChangeHandler } from '../../utils/helpers'
+import { useFormData } from '../../contexts/FormDataContext'
 
-export default function ContactInfo({ contactData, dispatch }) {
+export default function ContactInfo() {
+  const { data, dispatch } = useFormData()
+  const { contactData } = data
+
   return (
     <>
       <fieldset className="flex gap-10">

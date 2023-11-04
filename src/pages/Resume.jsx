@@ -1,4 +1,3 @@
-import { useReducer } from 'react'
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 
@@ -6,26 +5,17 @@ import ResumeCard from '../components/Resume/ResumeCard'
 import InputColor from '../components/Resume/InputColor'
 import DownloadBtn from '../components/Resume/DownloadBtn'
 import GeneratePreviewBtn from '../components/Resume/GeneratePreviewBtn'
+import { useSearchParams } from 'react-router-dom'
+import { useFormData } from '../contexts/FormDataContext'
 
-const initialColors = {
-  accentColor: '#ff0000',
-  bgColor: '#000000',
-  secBgColor: '#eeeeee',
-}
-function reducer(state, action) {
-  switch (action.type) {
-    case 'accentColorChange':
-      return { ...state, accentColor: action.payLoad }
-    case 'bgColorChange':
-      return { ...state, bgColor: action.payLoad }
-    case 'secBgColorChange':
-      return { ...state, secBgColor: action.payLoad }
-    default:
-      throw new Error(`Invalid action ${action.type}`)
-  }
-}
-export default function Resume({ data, dispatch2 }) {
-  const [colors, dispatch] = useReducer(reducer, initialColors)
+export default function Resume() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const accentColor = searchParams.get('accentColor') ?? '#ff0000'
+  const bgColor = searchParams.get('bgColor') ?? '#000000'
+  const secBgColor = searchParams.get('secBgColor') ?? '#eeeeee'
+  const { dispatch: dispatch2 } = useFormData()
+
+  console.log(accentColor, bgColor, secBgColor)
   function downloadPDF() {
     const resumeCardElement = document.querySelector('.resume-card')
 
@@ -48,32 +38,43 @@ export default function Resume({ data, dispatch2 }) {
       <div className="flex  gap-4 pb-5 items-center">
         <InputColor
           txt={'accentColor'}
-          color={colors.accentColor}
+          color={accentColor}
           onChange={(e) =>
-            dispatch({ type: 'accentColorChange', payLoad: e.target.value })
+            setSearchParams({
+              accentColor: e.target.value,
+              bgColor,
+              secBgColor,
+            })
           }
         />
         <InputColor
           txt={'Background color'}
-          color={colors.bgColor}
+          color={bgColor}
           onChange={(e) =>
-            dispatch({ type: 'bgColorChange', payLoad: e.target.value })
+            setSearchParams({
+              accentColor,
+              bgColor: e.target.value,
+              secBgColor,
+            })
           }
         />
         <InputColor
           txt={'Second Background color'}
-          color={colors.secBgColor}
+          color={secBgColor}
           onChange={(e) =>
-            dispatch({ type: 'secBgColorChange', payLoad: e.target.value })
+            setSearchParams({
+              accentColor,
+              bgColor,
+              secBgColor: e.target.value,
+            })
           }
         />
         <DownloadBtn downloadPDF={downloadPDF} />
       </div>
       <ResumeCard
-        data={data}
-        accentColor={colors.accentColor}
-        bgColor={colors.bgColor}
-        secBgColor={colors.secBgColor}
+        accentColor={accentColor}
+        bgColor={bgColor}
+        secBgColor={secBgColor}
       ></ResumeCard>
       <GeneratePreviewBtn dispatch={dispatch2} />
     </section>

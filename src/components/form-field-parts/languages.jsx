@@ -1,8 +1,11 @@
 import TextInput from './TextInput'
 import AddBtn from './AddBtn'
 import TimesClose from './TimesClose'
+import { useFormData } from '../../contexts/FormDataContext'
 
-export default function Languages({ languages, dispatch }) {
+export default function Languages() {
+  const { dispatch, data } = useFormData()
+  const { languages } = data
   function inputChangeHandler(e, index) {
     const newLanguages = [...languages]
     newLanguages[index] = e.target.value

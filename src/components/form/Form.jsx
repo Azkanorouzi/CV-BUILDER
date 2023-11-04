@@ -1,6 +1,9 @@
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-export default function Form({ children, dispatch, currentStep, setCurPage }) {
+export default function Form({ children, currentStep }) {
+  const navigate = useNavigate()
+
   useEffect(() => {
     function handleKeyDown(e) {
       if (
@@ -11,31 +14,29 @@ export default function Form({ children, dispatch, currentStep, setCurPage }) {
         document.activeElement.tagName === 'TEXTAREA'
       ) {
         if (e.key === 'Enter' && currentStep < 7) {
-          dispatch({ type: 'setStep', payLoad: currentStep + 1 })
+          navigate(String(+currentStep + 1))
           return
         }
-        if (e.key === 'Enter' && currentStep === 7) {
-          setCurPage('resume')
-          dispatch({ type: 'setStepFinal' })
+        if (e.key === 'Enter' && currentStep == 7) {
+          navigate('/resume')
           return
         }
         return
       }
-      currentStep !== e.key && dispatch({ type: 'setStep', payLoad: +e.key })
+      currentStep !== e.key && navigate(e.key)
     }
     document.addEventListener('keydown', handleKeyDown)
     return function () {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [currentStep, dispatch, setCurPage])
+  }, [currentStep, navigate])
 
   function handleNextClick() {
-    if (currentStep === 7) {
-      dispatch({ type: 'setStepFinal' })
-      setCurPage('resume')
+    if (currentStep == 7) {
+      navigate('/resume')
       return
     }
-    dispatch({ type: 'setStep', payLoad: currentStep + 1 })
+    navigate(String(+currentStep + 1))
   }
   return (
     <form className="relative flex flex-col gap-5">
@@ -45,14 +46,12 @@ export default function Form({ children, dispatch, currentStep, setCurPage }) {
           <button
             className="btn btn-accent flex-1"
             type="button"
-            onClick={() =>
-              dispatch({ type: 'setStep', payLoad: currentStep - 1 })
-            }
+            onClick={() => navigate(String(currentStep - 1))}
           >
             Back
           </button>
         )}
-        {currentStep !== 8 && (
+        {currentStep != 8 && (
           <button
             className="btn btn-secondary flex-1"
             type="button"

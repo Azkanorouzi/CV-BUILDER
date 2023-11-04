@@ -1,8 +1,11 @@
 import TextInput from './TextInput'
 import AddBtn from './AddBtn'
 import TimesClose from './TimesClose'
+import { useFormData } from '../../contexts/FormDataContext'
 
-export default function Skill({ skills, dispatch }) {
+export default function Skill() {
+  const { dispatch, data } = useFormData()
+  const { skills } = data
   function inputChangeHandler(e, index) {
     const newSkills = [...skills]
     newSkills[index] = e.target.value

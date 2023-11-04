@@ -1,7 +1,11 @@
 import Interest from './Interest'
 import AddBtn from './AddBtn'
+import { useFormData } from '../../contexts/FormDataContext'
 
-export default function Interests({ interest, dispatch }) {
+export default function Interests() {
+  const { data, dispatch } = useFormData()
+  const { interest } = data
+
   function inputChangeHandler(e, index) {
     const newInterest = [...interest]
     newInterest[index] = e.target.value

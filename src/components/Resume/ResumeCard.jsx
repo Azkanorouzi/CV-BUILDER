@@ -1,8 +1,10 @@
+import { useFormData } from '../../contexts/FormDataContext'
 import { shouldTextBeDark } from '../../utils/helpers'
 
-export default function ResumeCard({ data, accentColor, bgColor, secBgColor }) {
+export default function ResumeCard({ accentColor, bgColor, secBgColor }) {
   const isTextDark = shouldTextBeDark(bgColor)
   const isTextDark2 = shouldTextBeDark(secBgColor)
+  const { data } = useFormData()
   return (
     <section
       className="flex max-w-4xl resume-card "

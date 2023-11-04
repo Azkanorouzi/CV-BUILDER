@@ -1,15 +1,11 @@
 import PicInput from './PicInput'
 import TextInput from './TextInput'
 import { dataChangeHandler } from '../../utils/helpers'
+import { useFormData } from '../../contexts/FormDataContext'
 
-export default function GeneralInfo({ img, generalData, dispatch }) {
-  function imgChangeHandler(e, target) {
-    if (target ?? e.target?.files?.length) {
-      const selectedFile = target?.files[0] ?? e.target.files[0]
-      localStorage.removeItem('img')
-      dispatch({ type: 'setImg', payLoad: URL.createObjectURL(selectedFile) })
-    }
-  }
+export default function GeneralInfo() {
+  const { data, dispatch, imgChangeHandler } = useFormData()
+  const { img, generalData } = data
 
   return (
     <>

@@ -4,7 +4,7 @@ export default {
     err: false,
   },
   data: {
-    img: '',
+    img: 'me.jpeg',
     skills: ['JS', 'HTML', 'CSS', 'REACT', 'NODE JS'],
     languages: ['Persian', 'English'],
     interests: [
