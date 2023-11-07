@@ -4,7 +4,7 @@ demo: [https://react-cvbuilder.netlify.app/](https://react-cvbuilder.netlify.app
 
 Hey there this is me AZKA 🙋‍♂️
 
-and this is React CVBuilder which allows you to create your very own resume in a blink of an eye, you can upload your information to build your resume quick and easy, I also included a nice dark/light mode functionality, ngl themes are my favorite part of my front-end projects ;).
+and this is React CVBuilder which allows you to create your very own resume in a blink of an eye, you can upload your information to build your resume quick and easy, I also included a nice dark/light mode functionality, ngl themes are my favorite part of front-end projects ;).
 
 ![Screenshot1.png](screenshots/screenshot1.png)
 ![Screenshot2.png](screenshots/screenshot2.png)
