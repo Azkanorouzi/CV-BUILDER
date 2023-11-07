@@ -18,11 +18,16 @@ import {
 } from '../utils/helpers'
 import { useParams } from 'react-router-dom'
 import { useFormData } from '../contexts/FormDataContext'
+import { useEffect } from 'react'
 
 export default function CVBuilder() {
   const { step: st = 1 } = useParams()
   const step = st > 7 ? 7 : st <= 0 ? 1 : isNaN(st) ? 1 : st ?? 1
   const { addNewItemHandler, data } = useFormData()
+
+  useEffect(() => {
+    document.title = 'CVBuilder | Build'
+  }, [])
 
   return (
     <section className="grid place-content-center lg:w-full h-full animate-opacity-in opacity-0  ">

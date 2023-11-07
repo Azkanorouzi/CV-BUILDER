@@ -8,6 +8,20 @@ import GeneratePreviewBtn from '../components/Resume/GeneratePreviewBtn'
 import { useSearchParams } from 'react-router-dom'
 import { useFormData } from '../contexts/FormDataContext'
 import jsPDF from 'jspdf'
+import { useEffect } from 'react'
+
+function downloadPDF() {
+  let pdfjs = document.querySelector('.resume-card')
+  let doc = new jsPDF('l', 'mm', [970, 970])
+
+  doc.html(pdfjs, {
+    callback: function (doc) {
+      doc.save('resume.pdf')
+    },
+    x: 30,
+    y: 0,
+  })
+}
 
 export default function Resume() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -16,18 +30,10 @@ export default function Resume() {
   const secBgColor = searchParams.get('secBgColor') ?? '#eeeeee'
   const { dispatch: dispatch2 } = useFormData()
 
-  function downloadPDF() {
-    let pdfjs = document.querySelector('.resume-card')
-    let doc = new jsPDF('l', 'mm', [970, 970])
+  useEffect(() => {
+    document.title = 'CVBuilder | Preview'
+  }, [])
 
-    doc.html(pdfjs, {
-      callback: function (doc) {
-        doc.save('resume.pdf')
-      },
-      x: 30,
-      y: 0,
-    })
-  }
   return (
     <section className="grid place-content-center ">
       <div className="flex flex-col lg:flex-row items-center lg:gap-2 ">

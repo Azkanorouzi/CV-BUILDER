@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from 'react'
+import { createContext, useCallback, useContext, useReducer } from 'react'
 import initialData from '../data/initialData'
 import previewData from '../data/previewData'
 
@@ -55,7 +55,12 @@ function reducer({ state, data }, { type, payLoad }) {
 function FormDataContextProvider({ children }) {
   const [{ state, data }, dispatch] = useReducer(reducer, initialData)
 
-  function addNewItemHandler(data, setter, generator, max) {
+  const addNewItemHandler = useCallback(function (
+    data,
+    setter,
+    generator,
+    max
+  ) {
     if (data.length === max) {
       dispatch({
         type: 'err',
@@ -65,15 +70,16 @@ function FormDataContextProvider({ children }) {
     }
     const newItem = generator()
     dispatch({ type: 'newItem', payLoad: { propName: setter, newItem } })
-  }
+  },
+  [])
 
-  function imgChangeHandler(e, target) {
+  const imgChangeHandler = useCallback(function (e, target) {
     if (target ?? e.target?.files?.length) {
       const selectedFile = target?.files[0] ?? e.target.files[0]
       localStorage.removeItem('img')
       dispatch({ type: 'setImg', payLoad: URL.createObjectURL(selectedFile) })
     }
-  }
+  }, [])
 
   return (
     <FormDataContext.Provider
