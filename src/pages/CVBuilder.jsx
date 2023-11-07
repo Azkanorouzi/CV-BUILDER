@@ -25,8 +25,8 @@ export default function CVBuilder() {
   const { addNewItemHandler, data } = useFormData()
 
   return (
-    <section className="grid place-content-center w-full h-full animate-opacity-in opacity-0">
-      <div className="flex items-center rounded-xl">
+    <section className="grid place-content-center lg:w-full h-full animate-opacity-in opacity-0  ">
+      <div className="flex items-center rounded-xl flex-col lg:flex-row">
         <Pagination currentStep={step}></Pagination>
         <StepTitle currentStep={step} />
       </div>

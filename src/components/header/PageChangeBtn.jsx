@@ -23,7 +23,7 @@ export default function PageChangeBtn() {
     previewBtn.current.classList.add('swap-on')
   }, [])
   return (
-    <label className="swap swap-flip" role="button">
+    <label className="swap swap-flip " role="button">
       <input
         type="checkbox"
         onClick={() =>
@@ -31,13 +31,13 @@ export default function PageChangeBtn() {
         }
       />
 
-      <div className="flex items-center gap-2" ref={buildBtn}>
-        <i className="fa-solid fa-pen text-3xl hover"></i>
-        <span className="text-xl">Build</span>
+      <div className="flex items-center gap-2  justify-end" ref={buildBtn}>
+        <i className="fa-solid fa-pen text-xl lg:text-3xl hover"></i>
+        <span className="lg:text-xl">Build</span>
       </div>
-      <div className="flex items-center gap-2" ref={previewBtn}>
-        <i className="fa-regular fa-eye text-3xl hover"></i>
-        <span className="text-xl">Preview</span>
+      <div className="flex items-center gap-2 justify-between" ref={previewBtn}>
+        <i className="fa-regular fa-eye text-2xl lg:text-3xl hover"></i>
+        <span className="lg:text-xl">Preview</span>
       </div>
     </label>
   )

@@ -1,12 +1,13 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-
-import Main from './components/main'
+import Main from './components/Main'
 import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
-import CVBuilder from './pages/CVBuilder'
-import Resume from './pages/resume'
 import PageNotFound from './components/PageNotFound'
 import { FormDataContextProvider } from './contexts/FormDataContext'
+import { Suspense, lazy } from 'react'
+import Loader from './components/Loader'
+const CVBuilder = lazy(() => import('./pages/CVBuilder'))
+const Resume = lazy(() => import('./pages/Resume'))
 
 /* 
     <button data-set-theme="night" data-act-class="ACTIVECLASS">
@@ -26,35 +27,37 @@ function App() {
       <BrowserRouter>
         <div className="flex flex-col min-h-screen relative">
           <Header />
-          <Routes>
-            <Route path="*" element={<PageNotFound />} />
-            <Route path="/" element={<Navigate to="/cvbuilder" />} />
-            <Route
-              path="/cvbuilder"
-              element={
-                <Main>
-                  <CVBuilder />
-                </Main>
-              }
-            >
+          <Suspense fallback={<Loader></Loader>}>
+            <Routes>
+              <Route path="*" element={<PageNotFound />} />
+              <Route path="/" element={<Navigate to="/cvbuilder" />} />
               <Route
-                path="/cvbuilder/:step"
+                path="/cvbuilder"
                 element={
                   <Main>
                     <CVBuilder />
                   </Main>
                 }
-              />
-            </Route>
-            <Route
-              path="/resume"
-              element={
-                <Main>
-                  <Resume />
-                </Main>
-              }
-            ></Route>
-          </Routes>
+              >
+                <Route
+                  path="/cvbuilder/:step"
+                  element={
+                    <Main>
+                      <CVBuilder />
+                    </Main>
+                  }
+                />
+              </Route>
+              <Route
+                path="/resume"
+                element={
+                  <Main>
+                    <Resume />
+                  </Main>
+                }
+              ></Route>
+            </Routes>
+          </Suspense>
           <Footer />
         </div>
       </BrowserRouter>

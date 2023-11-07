@@ -4,31 +4,32 @@ import { useFormData } from '../../contexts/FormDataContext'
 
 export default function Interests() {
   const { data, dispatch } = useFormData()
-  const { interest } = data
+
+  const { interests } = data
 
   function inputChangeHandler(e, index) {
-    const newInterest = [...interest]
+    const newInterest = [...interests]
     newInterest[index] = e.target.value
     dispatch({ type: 'setInterests', payLoad: newInterest })
   }
   function deleteClickHandler(index) {
-    const newInterest = [...interest]
+    const newInterest = [...interests]
     newInterest.splice(index, 1)
     dispatch({ type: 'setInterests', payLoad: newInterest })
   }
   function addHandler(e, max) {
-    if (interest.length > max) {
+    if (interests.length > max) {
       dispatch({
         type: 'err',
         payLoad: `Error: you can't have more than ${max} items`,
       })
       return
     }
-    dispatch({ type: 'setInterests', payLoad: [...interest, e.target.value] })
+    dispatch({ type: 'setInterests', payLoad: [...interests, e.target.value] })
   }
   return (
     <>
-      {interest.map((interest, i) => (
+      {interests.map((interest, i) => (
         <Interest
           deleteClickHandler={deleteClickHandler}
           interest={interest}
@@ -38,7 +39,7 @@ export default function Interests() {
         />
       ))}
 
-      <AddBtn onClick={(e) => addHandler(e, 4)}>Interest</AddBtn>
+      <AddBtn onClick={(e) => addHandler(e, 7)}>Interest</AddBtn>
     </>
   )
 }

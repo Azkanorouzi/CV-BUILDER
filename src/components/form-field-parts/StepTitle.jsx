@@ -1,6 +1,6 @@
 export default function StepTitle({ currentStep }) {
   return (
-    <div className="text-3xl bg-neutral w-full h-full rounded-tr-2xl border  border-l-0 text-primary flex items-center justify-center border-primary">
+    <div className="text-lg lg:text-3xl bg-neutral w-full h-full lg:rounded-tr-2xl border  border-l-0 text-primary flex items-center justify-center border-primary">
       <span className="text-secondary px-2">
         {currentStep == 1 && 'General Info'}
         {currentStep == 2 && 'Contact'}

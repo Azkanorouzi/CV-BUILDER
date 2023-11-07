@@ -8,11 +8,11 @@ export default {
     skills: ['JS', 'HTML', 'CSS', 'REACT', 'NODE JS'],
     languages: ['Persian', 'English'],
     interests: [
-      '🎥 Watching movies and series',
-      '🎯 Reading self-help',
-      '🔴 watching youtube',
-      '🏋️Body building',
-      '💸 Crypto currencies',
+      'Watching movies and series',
+      'Reading self-help',
+      'watching youtube',
+      'Body building',
+      'Crypto currencies',
     ],
     generalData: {
       firstName: 'Azka',

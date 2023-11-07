@@ -7,7 +7,7 @@ export default function ResumeCard({ accentColor, bgColor, secBgColor }) {
   const { data } = useFormData()
   return (
     <section
-      className="flex max-w-4xl resume-card "
+      className="flex lg:max-w-4xl overflow-scroll text-sm resume-card"
       style={{ background: secBgColor }}
     >
       <aside

@@ -1,5 +1,5 @@
-import jsPDF from 'jspdf'
-import html2canvas from 'html2canvas'
+// import jsPDF from 'jspdf'
+// import html2canvas from 'html2canvas'
 
 import ResumeCard from '../components/Resume/ResumeCard'
 import InputColor from '../components/Resume/InputColor'
@@ -7,6 +7,7 @@ import DownloadBtn from '../components/Resume/DownloadBtn'
 import GeneratePreviewBtn from '../components/Resume/GeneratePreviewBtn'
 import { useSearchParams } from 'react-router-dom'
 import { useFormData } from '../contexts/FormDataContext'
+import jsPDF from 'jspdf'
 
 export default function Resume() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -15,27 +16,21 @@ export default function Resume() {
   const secBgColor = searchParams.get('secBgColor') ?? '#eeeeee'
   const { dispatch: dispatch2 } = useFormData()
 
-  console.log(accentColor, bgColor, secBgColor)
   function downloadPDF() {
-    const resumeCardElement = document.querySelector('.resume-card')
+    let pdfjs = document.querySelector('.resume-card')
+    let doc = new jsPDF('l', 'mm', [970, 970])
 
-    // Create a canvas from the HTML content
-    html2canvas(resumeCardElement, { scrollY: -window.scrollY }).then(
-      (canvas) => {
-        const imgData = canvas.toDataURL('image/png')
-
-        // Define the PDF document
-        const pdf = new jsPDF('p', 'mm', 'a4')
-        pdf.addImage(imgData, 'PNG', 0, 0, 220, 297) // Adjust page size if needed
-
-        // Save the PDF as a file
-        pdf.save('resume.pdf')
-      }
-    )
+    doc.html(pdfjs, {
+      callback: function (doc) {
+        doc.save('resume.pdf')
+      },
+      x: 30,
+      y: 0,
+    })
   }
   return (
-    <section className="grid place-content-center">
-      <div className="flex  gap-4 pb-5 items-center">
+    <section className="grid place-content-center ">
+      <div className="flex flex-col lg:flex-row items-center lg:gap-2 ">
         <InputColor
           txt={'accentColor'}
           color={accentColor}

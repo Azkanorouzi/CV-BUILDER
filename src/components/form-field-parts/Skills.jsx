@@ -45,7 +45,7 @@ export default function Skill() {
           </fieldset>
         </div>
       ))}
-      <AddBtn onClick={(e) => addHandler(e, 4)}>Skills</AddBtn>
+      <AddBtn onClick={(e) => addHandler(e, 7)}>Skills</AddBtn>
     </>
   )
 }
