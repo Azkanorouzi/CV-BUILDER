@@ -11,7 +11,7 @@ and this is React CVBuilder which allows you to create your very own resume in a
 
 ✏️ How to use it:
 
-- Note: you can go to different parts of the form by clicking on your 1 2 3 4 5 6 keys if you're using a keyboard, also you can easily share your resume with the exact colors of your choice for anyone, thanks to react router.
+- Note: you can go to different parts of the form by clicking on your number keys if you're using a keyboard, also you can easily share your resume with the exact colors of your choice for anyone thanks to react router.
 
 - Upload your information and complete each step (image, education data, working experience, skills, habits ...)
 - After you're done you'll be automatically navigated to /resume page
